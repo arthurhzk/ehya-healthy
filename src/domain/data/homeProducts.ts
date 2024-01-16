@@ -4,20 +4,26 @@ const homeProducts: homeProductType[] = [
     {
         id: 2,
         type: 'Destaque',
-        name: 'Nairo Series®',
-        image: 'public/img/backpack-image-2.png'
+        title: 'Nairo Series®',
+        image: '/img/backpack-image-2.png'
     },
     {
         id: 3,
         type: 'Novidade',
-        name: 'Kensho Series®',
-        image: 'public/img/backpack-image-3.png'
+        title: 'Kensho Series®',
+        image: '/img/backpack-image-3.png'
     },
     {
         id: 4,
         type: 'Feito a mão',
-        name: 'Atarashi Series®',
-        image: 'public/image/backpack-image-4.png'
+        title: 'Atarashi Series®',
+        image: '/img/backpack-image-4.png'
+    },
+    {
+        id: 5,
+        type: 'Exclusiva',
+        title: 'Kunomo Series®',
+        image: '/img/backpack-image-5.png'
     }
 ];
 

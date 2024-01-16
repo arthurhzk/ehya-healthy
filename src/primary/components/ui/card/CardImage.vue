@@ -5,12 +5,18 @@ const props = defineProps({
     class: {
         type: String,
         default: ''
+    },
+    image: {
+        type: String,
+        default: ''
     }
 });
 </script>
 
 <template>
-    <div :class="cn(' bg-card text-card-foreground shadow-sm', props.class)">
-        <slot />
-    </div>
+    <img
+        :src="props.image"
+        :class="cn('', props.class)"
+    />
+    <slot></slot>
 </template>

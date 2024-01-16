@@ -1,22 +1,34 @@
 <template>
-    <side-container
-        ><div class="flex justify-between">
-            <my-h2>Clonify</my-h2>
-            <div class="flex items-center gap-1">
-                <box-icon :class="iconSize" />
-                <div class="gap-4 flex items-center">
-                    <home-icon :class="iconSize" />
-                    <hamburger-menu-icon :class="iconSize" />
-                </div>
-            </div>
-        </div>
-    </side-container>
+    <fwb-navbar solid>
+        <template #logo>
+            <fwb-navbar-logo
+                image-url="/img/backpack-logo.png"
+                link="#"
+            >
+                Voyager Backpacks
+            </fwb-navbar-logo>
+        </template>
+        <template #default="{ isShowMenu }">
+            <fwb-navbar-collapse :is-show-menu="isShowMenu">
+                <fwb-navbar-link
+                    is-active
+                    link="#"
+                >
+                    Home
+                </fwb-navbar-link>
+                <fwb-navbar-link link="#"> Services </fwb-navbar-link>
+                <fwb-navbar-link link="#"> Pricing </fwb-navbar-link>
+                <fwb-navbar-link link="#"> Contact </fwb-navbar-link>
+            </fwb-navbar-collapse>
+        </template>
+    </fwb-navbar>
 </template>
 
-<script setup lang="ts">
-import SideContainer from '@/primary/components/containers/SideContainer.vue';
-import MyH2 from '@/primary/components/typography/MyH2.vue';
-import { computed } from 'vue';
-import { HamburgerMenuIcon, HomeIcon, BoxIcon } from '@radix-icons/vue';
-const iconSize = computed(() => 'w-6 h-6');
+<script lang="ts" setup>
+import {
+    FwbNavbar,
+    FwbNavbarCollapse,
+    FwbNavbarLink,
+    FwbNavbarLogo
+} from 'flowbite-vue';
 </script>
