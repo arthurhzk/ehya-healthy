@@ -1,17 +1,28 @@
 <template>
     <section>
         <side-container>
-            <div class="md:flex md:flex-col md:items-center md:justify-center">
-                <product-carousel />
-                <my-p>MOCHILAS</my-p>
-                <my-h3>Mochilas de couro de qualidade.</my-h3>
-                <my-p
-                    >Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    voluptatum. non, nam facere eveniet! Unde?</my-p
-                >
-                <my-p class="font-semibold underline mt-4"
-                    >Ver a nossa coleção</my-p
-                >
+            <product-carousel class="block md:hidden" />
+            <div class="md:flex md:items-center md:gap-8">
+                <img
+                    class="hidden md:block lg:hidden"
+                    src="/img/backpack-image-6.png"
+                />
+                <img
+                    class="hidden lg:block p-4"
+                    src="/img/backpack-image-5.png"
+                    alt=""
+                />
+                <div class="md:flex md:flex-col">
+                    <my-p>MOCHILAS</my-p>
+                    <my-h3>Mochilas de couro de qualidade.</my-h3>
+                    <my-p
+                        >Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. voluptatum. non, nam facere eveniet! Unde?</my-p
+                    >
+                    <my-p class="font-semibold underline mt-4"
+                        >Ver a nossa coleção</my-p
+                    >
+                </div>
             </div>
             <div class="flex items-center justify-center">
                 <div
