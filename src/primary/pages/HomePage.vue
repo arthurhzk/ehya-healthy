@@ -1,29 +1,35 @@
 <template>
     <section>
         <side-container>
-            <product-carousel />
-            <my-p>MOCHILAS</my-p>
-            <my-h3>Mochilas de couro de qualidade.</my-h3>
-            <my-p
-                >Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                voluptatum. non, nam facere eveniet! Unde?</my-p
-            >
-            <my-p class="font-semibold underline mt-4"
-                >Ver a nossa coleção</my-p
-            >
+            <div class="md:flex md:flex-col md:items-center md:justify-center">
+                <product-carousel />
+                <my-p>MOCHILAS</my-p>
+                <my-h3>Mochilas de couro de qualidade.</my-h3>
+                <my-p
+                    >Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    voluptatum. non, nam facere eveniet! Unde?</my-p
+                >
+                <my-p class="font-semibold underline mt-4"
+                    >Ver a nossa coleção</my-p
+                >
+            </div>
             <div class="flex items-center justify-center">
-                <div class="grid grid-cols-2 mt-10 gap-10 items-center">
+                <div
+                    class="grid grid-cols-2 mt-10 gap-10 items-center md:flex md:gap-[64px] md:p-10"
+                >
                     <img
                         v-for="brand in brands"
                         :src="brand.logo"
                     />
                 </div>
             </div>
-            <home-card
-                v-for="product in homeProducts"
-                :key="product.id"
-                :product="product"
-            ></home-card>
+            <div class="md:flex md:items-center md:justify-center md:space-y-4">
+                <home-card
+                    v-for="product in homeProducts"
+                    :key="product.id"
+                    :product="product"
+                ></home-card>
+            </div>
             <my-p class="text-gray-500"
                 >Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur.
@@ -42,7 +48,14 @@
                 button-text="Assinar"
             ></NewsletterCard>
             <DescriptionCard
-                class="mb-12"
+                class="mb-12 block md:hidden"
+                title="Qualidade"
+                description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur."
+                start="Saiba mais"
+            />
+            <BigDescriptionCard
+                class="mb-12 hidden md:block"
                 title="Qualidade"
                 description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur."
@@ -63,5 +76,6 @@ import Button from '@/primary/components/ui/button/Button.vue';
 import brands from '@/domain/data/brands';
 import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
 import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
+import BigDescriptionCard from '@/primary/components/layouts/BigDescriptionCard.vue';
 import ProductCarousel from '@/primary/components/layouts/ProductCarousel.vue';
 </script>

@@ -18,12 +18,6 @@ const homeProducts: homeProductType[] = [
         type: 'Feito a mão',
         title: 'Atarashi Series®',
         image: '/img/backpack-image-4.png'
-    },
-    {
-        id: 5,
-        type: 'Exclusiva',
-        title: 'Kunomo Series®',
-        image: '/img/backpack-image-5.png'
     }
 ];
 
