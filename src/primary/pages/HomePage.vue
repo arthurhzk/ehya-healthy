@@ -1,11 +1,7 @@
 <template>
     <section>
-        <img
-            class="w-screen"
-            src="/img/backpack-image-1.png"
-            alt="Backpack"
-        />
         <side-container>
+            <product-carousel />
             <my-p>MOCHILAS</my-p>
             <my-h3>Mochilas de couro de qualidade.</my-h3>
             <my-p
@@ -46,6 +42,7 @@
                 button-text="Assinar"
             ></NewsletterCard>
             <DescriptionCard
+                class="mb-12"
                 title="Qualidade"
                 description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur."
@@ -66,4 +63,5 @@ import Button from '@/primary/components/ui/button/Button.vue';
 import brands from '@/domain/data/brands';
 import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
 import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
+import ProductCarousel from '@/primary/components/layouts/ProductCarousel.vue';
 </script>

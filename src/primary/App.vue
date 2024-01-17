@@ -6,10 +6,12 @@
     >
         <router-view></router-view>
     </transition>
+    <the-footer></the-footer>
 </template>
 
 <script setup lang="ts">
 import TheNav from '@/primary/external-interfaces/TheNav.vue';
+import TheFooter from '@/primary/external-interfaces/TheFooter.vue';
 </script>
 
 <style>
