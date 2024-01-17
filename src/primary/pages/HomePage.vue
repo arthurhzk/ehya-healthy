@@ -40,6 +40,17 @@
                 variant="default"
                 >Compre agora!</Button
             >
+            <NewsletterCard
+                title="Assine a Newsletter"
+                description="Aproveite os ótimos descontos para assinantes"
+                button-text="Assinar"
+            ></NewsletterCard>
+            <DescriptionCard
+                title="Qualidade"
+                description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur."
+                start="Saiba mais"
+            />
         </side-container>
     </section>
 </template>
@@ -53,4 +64,6 @@ import MyH3 from '@/primary/components/typography/MyH3.vue';
 import MyP from '@/primary/components/typography/MyP.vue';
 import Button from '@/primary/components/ui/button/Button.vue';
 import brands from '@/domain/data/brands';
+import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
+import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
 </script>
