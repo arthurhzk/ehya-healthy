@@ -1,11 +1,10 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import homeProducts from '@/domain/data/homeProducts';
-import homeProductType from '@/domain/types/homeProductType';
 export const useProducts = () => {
     const router = useRouter();
     const search = ref('');
-    const productId = ref([]);
+
     const fetchAllProducts = computed(() => {
         if (search.value.length < 2) {
             return homeProducts;
