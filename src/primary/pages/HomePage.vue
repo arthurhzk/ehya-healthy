@@ -19,10 +19,7 @@
                 <div class="md:flex md:flex-col">
                     <my-p>MOCHILAS</my-p>
                     <my-h3>Mochilas de couro de qualidade.</my-h3>
-                    <my-p
-                        >Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. voluptatum. non, nam facere eveniet! Unde?</my-p
-                    >
+                    <my-p>Nossos produtos são todos feitos à mão.</my-p>
                     <my-p class="font-semibold underline mt-4"
                         >Ver a nossa coleção</my-p
                     >

@@ -5,4 +5,5 @@ export default interface homeProductType {
     image: string;
     price: number;
     category: string;
+    description: string;
 }

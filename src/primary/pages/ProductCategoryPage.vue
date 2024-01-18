@@ -31,7 +31,9 @@
             class="flex mt-4 flex-col items-center justify-center p-2 gap-4 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3"
         >
             <div v-for="product in searchProducts">
-                <product-card :product="product"></product-card>
+                <router-link :to="`/${product.id}`">
+                    <product-card :product="product"></product-card
+                ></router-link>
             </div>
         </div>
     </side-container>
@@ -40,29 +42,8 @@
 <script lang="ts" setup>
 import SideContainer from '@/primary/components/containers/SideContainer.vue';
 import ProductCard from '@/primary/components/layouts/ProductCard.vue';
-import homeProducts from '@/domain/data/homeProducts';
 import Input from '@/primary/components/ui/input/Input.vue';
-import { useRouter } from 'vue-router';
-import { ref, computed } from 'vue';
 import productCategories from '@/domain/data/productCategories';
-const router = useRouter();
-const search = ref('');
-const navigateToCategory = (path: string) => {
-    router.push(path);
-};
-const searchProducts = computed(() => {
-    if (search.value.length < 2) {
-        return filterProducts(
-            router.currentRoute.value.params.category.toString()
-        );
-    } else {
-        return homeProducts.filter((product) =>
-            product.title.toLowerCase().includes(search.value.toLowerCase())
-        );
-    }
-});
-
-const filterProducts = (category: string) => {
-    return homeProducts.filter((product) => product.category === category);
-};
+import { useProducts } from '@/primary/composables/useProducts';
+const { searchProducts, search, navigateToCategory } = useProducts();
 </script>
