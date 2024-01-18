@@ -1,8 +1,11 @@
 <template>
-    <div :class="cn('relative', props.class)">
+    <div
+        class="md:flex md:items-center md:justify-center"
+        :class="cn('relative', props.class)"
+    >
         <img
             :src="props.image"
-            class="w-full"
+            class="md:w-[50%] max-h-[740px] object-cover]"
         />
         <div class="absolute inset-0 flex items-center justify-center">
             <slot></slot>

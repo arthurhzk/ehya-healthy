@@ -1,8 +1,12 @@
 <template>
     <section>
+        <div class="flex items-center justify-center"></div>
         <side-container>
-            <product-carousel class="block md:hidden" />
             <div class="md:flex md:items-center md:gap-8">
+                <img
+                    class="block md:hidden"
+                    src="/img/backpack-image-8.png"
+                />
                 <img
                     class="hidden md:block lg:hidden"
                     src="/img/backpack-image-6.png"
@@ -26,7 +30,7 @@
             </div>
             <div class="flex items-center justify-center">
                 <div
-                    class="grid grid-cols-2 mt-10 gap-10 items-center md:flex md:gap-[64px] md:p-10"
+                    class="grid grid-cols-2 mt-10 gap-10 items-center lg:flex lg:flex-row"
                 >
                     <img
                         v-for="brand in brands"
@@ -42,8 +46,8 @@
                 ></home-card>
             </div>
             <my-p class="text-gray-500"
-                >Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur.
+                >Aproveite agora os melhores descontos, corra que é por tempo
+                ilimitado!
             </my-p>
             <my-h2 class="text-center font-bold mt-6"
                 >05d : 11h : 23m : 02s</my-h2
@@ -53,25 +57,12 @@
                 variant="default"
                 >Compre agora!</Button
             >
+            <DescriptionCard />
             <NewsletterCard
                 title="Assine a Newsletter"
                 description="Aproveite os ótimos descontos para assinantes"
                 button-text="Assinar"
             ></NewsletterCard>
-            <DescriptionCard
-                class="mb-12 block md:hidden"
-                title="Qualidade"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur."
-                start="Saiba mais"
-            />
-            <BigDescriptionCard
-                class="mb-12 hidden md:block"
-                title="Qualidade"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptates, quibusdam. Lorem ipsum dolor sit amet consectetur."
-                start="Saiba mais"
-            />
         </side-container>
     </section>
 </template>
@@ -87,6 +78,4 @@ import Button from '@/primary/components/ui/button/Button.vue';
 import brands from '@/domain/data/brands';
 import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
 import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
-import BigDescriptionCard from '@/primary/components/layouts/BigDescriptionCard.vue';
-import ProductCarousel from '@/primary/components/layouts/ProductCarousel.vue';
 </script>

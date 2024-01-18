@@ -1,7 +1,7 @@
 <template>
     <fwb-footer>
         <fwb-footer-copyright
-            by="Flowbite™"
+            by="Voyage Leather Goods co.™"
             href="#"
             copyright-message="Todos os direitos reservados."
         />

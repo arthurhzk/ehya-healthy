@@ -1,7 +1,10 @@
 <template>
-    <Card>
+    <Card class="border m-4">
         <CardHeader>
-            <CardImage :image="props.product?.image" />
+            <CardImage
+                class="cursor-pointer"
+                :image="props.product?.image"
+            />
             <CardContent class="text-center text-gray-600">
                 {{ props.product?.type }}</CardContent
             >

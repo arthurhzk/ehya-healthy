@@ -3,4 +3,6 @@ export default interface homeProductType {
     type: string;
     title: string;
     image: string;
+    price: number;
+    category: string;
 }
