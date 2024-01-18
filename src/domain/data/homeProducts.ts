@@ -1,5 +1,5 @@
 import homeProductType from '@/domain/types/homeProductType';
-
+import productCategoryEnum from '@/domain/enums/productCategoryEnum';
 const homeProducts: homeProductType[] = [
     {
         id: 2,
@@ -7,7 +7,7 @@ const homeProducts: homeProductType[] = [
         title: 'Nairo Series®',
         image: '/img/backpack-image-2.png',
         price: 680,
-        category: 'Mochila'
+        category: productCategoryEnum.BACKPACK
     },
     {
         id: 3,
@@ -15,7 +15,7 @@ const homeProducts: homeProductType[] = [
         title: 'Kensho Series®',
         image: '/img/backpack-image-3.png',
         price: 559,
-        category: 'Mochila'
+        category: productCategoryEnum.BACKPACK
     },
     {
         id: 4,
@@ -23,7 +23,7 @@ const homeProducts: homeProductType[] = [
         title: 'Atarashi Series®',
         image: '/img/backpack-image-4.png',
         price: 480,
-        category: 'Mochila'
+        category: productCategoryEnum.BACKPACK
     },
     {
         id: 5,
@@ -31,7 +31,7 @@ const homeProducts: homeProductType[] = [
         title: 'Kabuya Series®',
         image: '/img/backpack-image-9.png',
         price: 680,
-        category: 'Mochila'
+        category: productCategoryEnum.BACKPACK
     },
     {
         id: 6,
@@ -39,7 +39,7 @@ const homeProducts: homeProductType[] = [
         title: ' Kotoba Series®',
         image: '/img/backpack-image-11.png',
         price: 380,
-        category: 'Mochila'
+        category: productCategoryEnum.BACKPACK
     },
     {
         id: 7,
@@ -47,7 +47,31 @@ const homeProducts: homeProductType[] = [
         title: 'Oozeki Series®',
         image: '/img/backpack-image-12.png',
         price: 580,
-        category: 'Mochila'
+        category: productCategoryEnum.BACKPACK
+    },
+    {
+        id: 8,
+        type: 'Novidade',
+        title: 'Caneca de Cerâmica Rústica',
+        image: '/img/mug-image-1.png',
+        price: 72,
+        category: productCategoryEnum.MUG
+    },
+    {
+        id: 9,
+        type: 'Destaque',
+        title: 'Caneca The Grounds',
+        image: '/img/mug-image-2.png',
+        price: 72,
+        category: productCategoryEnum.MUG
+    },
+    {
+        id: 10,
+        type: 'Destaque',
+        title: 'Caneca Preto Fosco',
+        image: '/img/mug-image-3.png',
+        price: 55,
+        category: productCategoryEnum.MUG
     }
 ];
 

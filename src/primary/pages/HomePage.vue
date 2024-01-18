@@ -40,7 +40,7 @@
             </div>
             <div class="md:flex md:items-center md:justify-center md:space-y-4">
                 <home-card
-                    v-for="product in homeProducts"
+                    v-for="product in sliceProductHomePage"
                     :key="product.id"
                     :product="product"
                 ></home-card>
@@ -76,6 +76,11 @@ import MyH3 from '@/primary/components/typography/MyH3.vue';
 import MyP from '@/primary/components/typography/MyP.vue';
 import Button from '@/primary/components/ui/button/Button.vue';
 import brands from '@/domain/data/brands';
+import { computed } from 'vue';
 import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
 import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
+
+const sliceProductHomePage = computed(() => {
+    return homeProducts.slice(0, 3);
+});
 </script>

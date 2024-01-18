@@ -50,14 +50,19 @@ const search = ref('');
 const navigateToCategory = (path: string) => {
     router.push(path);
 };
-
 const searchProducts = computed(() => {
     if (search.value.length < 2) {
-        return homeProducts;
+        return filterProducts(
+            router.currentRoute.value.params.category.toString()
+        );
     } else {
         return homeProducts.filter((product) =>
             product.title.toLowerCase().includes(search.value.toLowerCase())
         );
     }
 });
+
+const filterProducts = (category: string) => {
+    return homeProducts.filter((product) => product.category === category);
+};
 </script>

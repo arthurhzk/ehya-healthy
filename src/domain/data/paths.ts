@@ -7,7 +7,11 @@ const paths: pathTypes[] = [
     },
     {
         name: 'Produtos',
-        pathName: '/products/:type'
+        pathName: '/products'
+    },
+    {
+        name: 'Categoria',
+        pathName: '/products/:category'
     },
     {
         name: 'Sobre',

@@ -2,8 +2,12 @@ import productCategoryType from '@/domain/types/productCategoryType';
 
 const productCategories: productCategoryType[] = [
     {
-        type: '/products/all',
+        type: '/products',
         path: 'Todos os Produtos'
+    },
+    {
+        type: '/products/backpack',
+        path: 'Mochilas'
     },
     {
         type: '/products/mugs',
