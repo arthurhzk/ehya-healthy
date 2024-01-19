@@ -21,21 +21,12 @@
                     <Button class="block md:hidden w-full md:1/2"
                         >Comprar</Button
                     >
-<<<<<<< HEAD
 
                     <my-p class="hidden md:block lg:text-center"
                         >*Frete grátis para todo o Brasil em compras acima de R$
                         900.00.</my-p
                     >
                     <my-p class="hidden md:block lg:text-center">{{
-=======
-                    <my-p
-                        >*Frete grátis para todo o Brasil em compras acima de R$
-                        900.00.</my-p
-                    >
-
-                    <my-p class="text-center">{{
->>>>>>> bb8686cded1c71799d9668b0fc1eea947d073171
                         searchProductById?.description
                     }}</my-p>
                 </div>
