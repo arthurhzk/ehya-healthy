@@ -21,12 +21,16 @@
                     <Button class="block md:hidden w-full md:1/2"
                         >Comprar</Button
                     >
-                    <my-p class="lg:text-center"
+
+                    <my-p class="hidden md:block lg:text-center"
                         >*Frete grátis para todo o Brasil em compras acima de R$
                         900.00.</my-p
                     >
-                    <my-p>{{ searchProductById?.description }}</my-p>
+                    <my-p class="hidden md:block lg:text-center">{{
+                        searchProductById?.description
+                    }}</my-p>
                 </div>
+
                 <div class="md:flex md:items-center md:justify-center">
                     <Button class="hidden md:block w-full lg:w-[80%]"
                         >Adicionar ao Carrinho</Button
@@ -34,6 +38,34 @@
                 </div>
             </div>
         </div>
+        <Accordion
+            type="single"
+            collapsible
+        >
+            <AccordionItem
+                class="block md:hidden"
+                value="item-1"
+            >
+                <AccordionTrigger>Descrição do produto</AccordionTrigger>
+                <AccordionContent>
+                    {{ searchProductById?.description }}
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+        <Accordion
+            type="single"
+            collapsible
+        >
+            <AccordionItem
+                class="block md:hidden"
+                value="item-1"
+            >
+                <AccordionTrigger>Consulta de Frete</AccordionTrigger>
+                <AccordionContent>
+                    *Frete Grátis para compras acima de R$ 900,00
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
     </side-container>
 </template>
 
@@ -44,5 +76,11 @@ import MyH2 from '@/primary/components/typography/MyH2.vue';
 import MyH3 from '@/primary/components/typography/MyH3.vue';
 import MyP from '@/primary/components/typography/MyP.vue';
 import Button from '@/primary/components/ui/button/Button.vue';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger
+} from '@/primary/components/ui/accordion';
 const { searchProductById } = useProducts();
 </script>
