@@ -50,7 +50,6 @@ import productCategories from '@/domain/data/productCategories';
 import { useProducts } from '@/primary/infrastructure/composables/useProducts';
 const { fetchAllProducts, search, navigateToCategory } = useProducts();
 import { onMounted } from 'vue';
-
 onMounted(() => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {

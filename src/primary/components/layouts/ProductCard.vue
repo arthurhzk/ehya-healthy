@@ -7,8 +7,9 @@
             }}</CardTitle>
         </CardHeader>
         <CardContent class="font-semibold"
-            >R$ {{ props.product?.price.toFixed(2) }}</CardContent
+            >R$ {{ props.product?.price }}</CardContent
         >
+        <slot></slot>
     </Card>
 </template>
 <script setup lang="ts">
