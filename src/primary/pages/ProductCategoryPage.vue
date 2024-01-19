@@ -32,7 +32,10 @@
         >
             <div v-for="product in searchProducts">
                 <router-link :to="`/${product.id}`">
-                    <product-card :product="product"></product-card
+                    <product-card
+                        class="observe"
+                        :product="product"
+                    ></product-card
                 ></router-link>
             </div>
         </div>
@@ -44,6 +47,38 @@ import SideContainer from '@/primary/components/containers/SideContainer.vue';
 import ProductCard from '@/primary/components/layouts/ProductCard.vue';
 import Input from '@/primary/components/ui/input/Input.vue';
 import productCategories from '@/domain/data/productCategories';
-import { useProducts } from '@/primary/composables/useProducts';
+import { useProducts } from '@/primary/infrastructure/composables/useProducts';
+import { onMounted } from 'vue';
+
 const { searchProducts, search, navigateToCategory } = useProducts();
+
+onMounted(() => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    });
+
+    const elementsToWatch = document.querySelectorAll('.observe');
+    elementsToWatch.forEach((element) => {
+        observer.observe(element);
+    });
+});
 </script>
+
+<style scoped>
+.observe {
+    opacity: 0;
+    transform: scale(0.9);
+    transition:
+        opacity 1s,
+        transform 1s;
+}
+
+.observe.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>

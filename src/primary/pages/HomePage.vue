@@ -37,6 +37,7 @@
             </div>
             <div class="md:flex md:items-center md:justify-center md:space-y-4">
                 <home-card
+                    class="observe"
                     v-for="product in sliceProductHomePage"
                     :key="product.id"
                     :product="product"
@@ -54,8 +55,9 @@
                 variant="default"
                 >Compre agora!</Button
             >
-            <DescriptionCard />
+            <DescriptionCard class="observe" />
             <NewsletterCard
+                class="observe"
                 title="Assine a Newsletter"
                 description="Aproveite os ótimos descontos para assinantes"
                 button-text="Assinar"
@@ -76,8 +78,38 @@ import brands from '@/domain/data/brands';
 import { computed } from 'vue';
 import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
 import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
-
+import { onMounted } from 'vue';
 const sliceProductHomePage = computed(() => {
     return homeProducts.slice(0, 3);
 });
+
+onMounted(() => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    });
+
+    const elementsToWatch = document.querySelectorAll('.observe');
+    elementsToWatch.forEach((element) => {
+        observer.observe(element);
+    });
+});
 </script>
+
+<style scoped>
+.observe {
+    opacity: 0;
+    transform: scale(0.9);
+    transition:
+        opacity 1s,
+        transform 1s;
+}
+
+.observe.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>

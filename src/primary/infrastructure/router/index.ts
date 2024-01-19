@@ -2,16 +2,16 @@ import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router';
 
 const HomePage = () => import('@/primary/pages/HomePage.vue');
 const ProductPage = () => import('@/primary/pages/ProductsPage.vue');
-
 const ProductCategoryPage = () =>
     import('@/primary/pages/ProductCategoryPage.vue');
 const ProductDetailPage = () => import('@/primary/pages/ProductDetailPage.vue');
-
+const AboutPage = () => import('@/primary/pages/AboutPage.vue');
 export enum RootPage {
     home = 'HOME_PAGE',
     product = 'PRODUCT_PAGE',
     productCategory = 'PRODUCT_TYPE_CATEGORY',
-    productDetail = 'PRODUCT_DETAIL_PAGE'
+    productDetail = 'PRODUCT_DETAIL_PAGE',
+    about = 'ABOUT_PAGE'
 }
 
 export const routes: RouteRecordRaw[] = [
@@ -34,6 +34,11 @@ export const routes: RouteRecordRaw[] = [
         component: ProductDetailPage,
         name: RootPage.productDetail,
         path: '/:id'
+    },
+    {
+        component: AboutPage,
+        name: RootPage.about,
+        path: '/about'
     }
 ];
 

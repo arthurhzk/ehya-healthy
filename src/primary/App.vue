@@ -1,17 +1,19 @@
 <template>
     <the-nav></the-nav>
-    <transition
-        name="fade"
-        mode="out-in"
-    >
-        <router-view></router-view>
-    </transition>
+    <router-view v-slot="{ Component }">
+        <transition
+            name="fade"
+            mode="out-in"
+        >
+            <component :is="Component" />
+        </transition>
+    </router-view>
     <the-footer></the-footer>
 </template>
 
 <script setup lang="ts">
-import TheNav from '@/primary/external-interfaces/TheNav.vue';
-import TheFooter from '@/primary/external-interfaces/TheFooter.vue';
+import TheNav from '@/primary/components/external-interfaces/TheNav.vue';
+import TheFooter from '@/primary/components/external-interfaces/TheFooter.vue';
 </script>
 
 <style>

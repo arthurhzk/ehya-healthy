@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProducts } from '@/primary/composables/useProducts';
+import { useProducts } from '@/primary/infrastructure/composables/useProducts';
 import SideContainer from '@/primary/components/containers/SideContainer.vue';
 import MyH2 from '@/primary/components/typography/MyH2.vue';
 import MyH3 from '@/primary/components/typography/MyH3.vue';
