@@ -8,12 +8,14 @@
             <component :is="Component" />
         </transition>
     </router-view>
+    <Toaster />
     <the-footer></the-footer>
 </template>
 
 <script setup lang="ts">
 import TheNav from '@/primary/components/external-interfaces/TheNav.vue';
 import TheFooter from '@/primary/components/external-interfaces/TheFooter.vue';
+import Toaster from '@/primary/components/ui/toast/Toaster.vue';
 </script>
 
 <style>

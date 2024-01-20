@@ -1,18 +1,20 @@
 <template>
-    <fwb-footer>
-        <fwb-footer-copyright
-            by="Voyage Leather Goods co.™"
-            href="#"
-            copyright-message="Todos os direitos reservados."
-        />
-        <fwb-footer-link-group>
-            <fwb-footer-link href="#"> Sobre </fwb-footer-link>
-            <fwb-footer-link href="#">
-                Politicas de Privacidade
-            </fwb-footer-link>
-            <fwb-footer-link href="#"> Contato </fwb-footer-link>
-        </fwb-footer-link-group>
-    </fwb-footer>
+    <section class="absolute bottom-50">
+        <fwb-footer>
+            <fwb-footer-copyright
+                by="Voyage Leather Goods co.™"
+                href="#"
+                copyright-message="Todos os direitos reservados."
+            />
+            <fwb-footer-link-group>
+                <fwb-footer-link href="#"> Sobre </fwb-footer-link>
+                <fwb-footer-link href="#">
+                    Politicas de Privacidade
+                </fwb-footer-link>
+                <fwb-footer-link href="#"> Contato </fwb-footer-link>
+            </fwb-footer-link-group>
+        </fwb-footer>
+    </section>
 </template>
 
 <script lang="ts" setup>

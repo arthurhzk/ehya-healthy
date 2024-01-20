@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import homeProductType from '@/domain/types/homeProductType';
 
 export const useCartStore = defineStore('cart', () => {
@@ -16,5 +16,18 @@ export const useCartStore = defineStore('cart', () => {
             quantity.value++;
         }
     };
-    return { purchasedItems, addToCart };
+
+    const removeFromCart = (product: homeProductType) => {
+        purchasedItems.value.splice(purchasedItems.value.indexOf(product), 1);
+    };
+
+    const totalCartItems = computed(() => {
+        const totalItems = purchasedItems.value.reduce(
+            (acc, item) => acc + item.price,
+            0
+        );
+        return totalItems;
+    });
+
+    return { purchasedItems, addToCart, removeFromCart, totalCartItems };
 });

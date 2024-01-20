@@ -10,11 +10,13 @@
         </template>
 
         <template #default="{ isShowMenu }">
-            <ph-shopping-cart
-                :size="23"
-                color="#575757"
-                class="cursor-pointer md:hidden"
-            />
+            <router-link to="/cart">
+                <ph-shopping-cart
+                    :size="23"
+                    color="#575757"
+                    class="cursor-pointer md:hidden"
+                />
+            </router-link>
             <fwb-navbar-collapse :is-show-menu="isShowMenu">
                 <div v-for="path in paths">
                     <router-link

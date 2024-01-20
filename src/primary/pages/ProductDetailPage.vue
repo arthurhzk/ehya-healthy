@@ -39,14 +39,16 @@
                     </div>
 
                     <div class="md:flex md:items-center md:justify-center">
-                        <Button
+                        <Toaster
+                            variant="default"
+                            description="Produto adicionado com sucesso!"
+                            text="Adicionar ao carrinho"
                             @click="
                                 if (searchProductById)
                                     store.addToCart(searchProductById);
                             "
                             class="hidden md:block w-full lg:w-[80%] xl:w-[70%]"
-                            >Adicionar ao Carrinho</Button
-                        >
+                        ></Toaster>
                     </div>
                 </div>
             </div>
@@ -89,6 +91,7 @@ import MyH2 from '@/primary/components/typography/MyH2.vue';
 import MyH3 from '@/primary/components/typography/MyH3.vue';
 import MyP from '@/primary/components/typography/MyP.vue';
 import Button from '@/primary/components/ui/button/Button.vue';
+import Toaster from '@/primary/components/layouts/Toaster.vue';
 import { useCartStore } from '@/primary/infrastructure/store/cart';
 const store = useCartStore();
 import {

@@ -1,13 +1,13 @@
 <template>
-    <Card class="border">
+    <Card>
         <CardHeader>
             <CardImage :image="props.product?.image" />
             <CardTitle class="text-center">{{
                 props.product?.title
             }}</CardTitle>
         </CardHeader>
-        <CardContent class="font-semibold"
-            >R$ {{ props.product?.price }}</CardContent
+        <CardContent class="font-semibold text-center"
+            >R$ {{ props.product?.price.toFixed(2) }}</CardContent
         >
         <slot></slot>
     </Card>
