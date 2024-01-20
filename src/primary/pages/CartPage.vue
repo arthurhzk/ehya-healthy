@@ -109,7 +109,9 @@
                 >
             </div>
 
-            <Button class="w-full md:hidden bg-green-500 mt-6"
+            <Button
+                @click="redirect"
+                class="w-full md:hidden bg-green-500 mt-6"
                 >FINALIZAR COMPRA</Button
             >
         </side-container>
@@ -125,7 +127,9 @@ import Input from '@/primary/components/ui/input/Input.vue';
 import Button from '@/primary/components/ui/button/Button.vue';
 import { useCartStore } from '@/primary/infrastructure/store/cart';
 import { PhEnvelopeSimple } from '@phosphor-icons/vue';
-import { computed } from 'vue';
+import { loadStripe } from '@stripe/stripe-js';
+import { computed, onMounted } from 'vue';
+
 const store = useCartStore();
 
 const totalWithShipping = computed(() => {
@@ -134,6 +138,14 @@ const totalWithShipping = computed(() => {
     } else {
         return store.totalCartItems;
     }
+});
+
+const stripe = computed(async () => {
+    const response = await loadStripe(import.meta.env.VITE_STRIPE_KEY);
+    return response;
+});
+onMounted(() => {
+    console.log(stripe.value);
 });
 
 const totalProducts = computed(() => {
@@ -157,4 +169,24 @@ const shippingTax = computed(() => {
 const cartCondition = computed(() => {
     return store.totalCartItems > 0;
 });
+
+const redirect = async () => {
+    const stripeInstance = await stripe.value;
+    if (stripeInstance) {
+        stripeInstance.redirectToCheckout({
+            successUrl: 'http://localhost:3000/success',
+            cancelUrl: 'http://localhost:3000/cancel',
+            lineItems: [
+                {
+                    price: 'price_1Oal16EOa67N3NLEw22bnSia',
+                    quantity: 1
+                }
+            ],
+            mode: 'payment'
+        });
+    } else {
+        console.error('Stripe has not been properly initialized.');
+    }
+    return { redirect };
+};
 </script>
