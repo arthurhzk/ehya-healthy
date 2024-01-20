@@ -33,10 +33,14 @@
                         >
                     </div>
                     <div class="flex mt-8">
-                        <Input
-                            class="hidden md:block"
-                            placeholder="Adicione um cupom"
-                        />
+                        <div class="flex items-center">
+                            <ph-envelope-simple :size="24" />
+                            <Input
+                                class="md:border-none"
+                                type="text"
+                                placeholder="Adicione um cupom"
+                            />
+                        </div>
                         <Button
                             class="hidden md:block"
                             variant="secondary"
@@ -62,16 +66,49 @@
             </div>
 
             <div class="flex mt-8">
-                <Input
-                    class="md:hidden"
-                    placeholder="Adicione um cupom"
-                />
+                <div class="flex justify-center items-center ml-10">
+                    <ph-envelope-simple
+                        class="md:hidden"
+                        :size="24"
+                    />
+                    <Input
+                        class="border-none md:hidden"
+                        type="text"
+                        placeholder="Adicione um cupom"
+                    />
+                </div>
                 <Button
                     class="md:hidden"
                     variant="secondary"
                     >Adicionar</Button
                 >
             </div>
+            <div class="space-y-3 md:hidden">
+                <div
+                    v-if="store.totalCartItems < 900"
+                    class="flex justify-between"
+                >
+                    <my-p v-show="cartCondition">Subtotal</my-p>
+                    <my-p v-show="cartCondition"
+                        >R$: {{ store.totalCartItems.toFixed(2) }}</my-p
+                    >
+                </div>
+                <div class="flex justify-between">
+                    <my-p v-show="cartCondition">Entrega</my-p>
+                    <my-p v-show="cartCondition">{{ shippingTax }}</my-p>
+                </div>
+            </div>
+            <div class="flex justify-between md:hidden">
+                <my-p
+                    v-show="cartCondition"
+                    class="font-bold"
+                    >Total</my-p
+                >
+                <my-p v-show="cartCondition"
+                    >R$: {{ totalWithShipping.toFixed(2) }}</my-p
+                >
+            </div>
+
             <Button class="w-full md:hidden bg-green-500 mt-6"
                 >FINALIZAR COMPRA</Button
             >
@@ -87,6 +124,7 @@ import CartCard from '@/primary/components/layouts/CartCard.vue';
 import Input from '@/primary/components/ui/input/Input.vue';
 import Button from '@/primary/components/ui/button/Button.vue';
 import { useCartStore } from '@/primary/infrastructure/store/cart';
+import { PhEnvelopeSimple } from '@phosphor-icons/vue';
 import { computed } from 'vue';
 const store = useCartStore();
 
@@ -110,9 +148,9 @@ const totalProducts = computed(() => {
 
 const shippingTax = computed(() => {
     if (store.totalCartItems < 900) {
-        return 40;
+        return 'R$' + 40;
     } else {
-        return 0;
+        return 'Frete Grátis!';
     }
 });
 

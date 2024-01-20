@@ -19,8 +19,9 @@ const paths: pathTypes[] = [
         pathName: '/contact'
     },
     {
-        name: 'Carrinho',
+        name: `Carrinho`,
         pathName: '/cart'
     }
 ];
+
 export default paths;
