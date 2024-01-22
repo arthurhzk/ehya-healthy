@@ -39,7 +39,7 @@
                                 :disabled="isLoading"
                                 v-model:model-value="state.email"
                             />
-                            <div vif="errors?.email" class="text-red-800">
+                            <div vif="errors?.email" class="text-red-600">
                         <span v-for="error in errors?.email?._errors">{{ error }}</span>
                     </div>
                             <div class="flex items-center justify-center gap-2">
@@ -63,7 +63,7 @@
                                 :disabled="isLoading"
                                 v-model:model-value="state.password"
                             />
-                            <div vif="errors?.password" class="text-red-800">
+                            <div vif="errors?.password" class="text-red-600">
                         <span v-for="error in errors?.password?._errors">{{ error }}</span>
                     </div>
                         </div>
@@ -147,8 +147,8 @@ async function onSubmit(event: Event) {
 }
 
 const schema = z.object({
-    email: z.string().email("Email inválido"),
-    password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
+    email: z.string().email("Email inválido."),
+    password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres."),
 })
 
 

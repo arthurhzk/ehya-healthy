@@ -21,6 +21,10 @@ const paths: pathTypes[] = [
     {
         name: `Carrinho`,
         pathName: '/cart'
+    },
+    {
+        name: "Registrar",
+        pathName: "/register"
     }
 ];
 
