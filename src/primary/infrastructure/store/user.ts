@@ -4,8 +4,8 @@ import { supabase } from "@/secondary/lib/supabase"
 import { ref } from "vue"
 export const useUserStore = defineStore("users", () => {
   const initialState = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
 const state = ref(initialState)

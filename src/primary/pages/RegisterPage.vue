@@ -17,33 +17,17 @@
                    
                         <div class="flex flex-col gap-4 items-center justify-center">
                             
+
                             <div class="flex items-center justify-center gap-2">
-                            <Label for="">Nome</Label>
-                                <ph-user
-                                
-                      
-                        class="mr-2 h-4 w-4"
-                    />
-                </div>
-                <Input
-                                class="w-1/2"
-                                id="name"
-                                placeholder="Digite o seu nome completo"
-                                type="text"
-                                auto-capitalize="none"
-                                auto-complete="name"
-                                auto-correct="off"
-                                :disabled="isLoading"
-                           
-                            />
-                            <div class="flex items-center justify-center gap-2">
-                            <Label for="">Email</Label>
+                            <Label name="email" for="">Email</Label>
                                 <ph-envelope
                                 
                       
                         class="mr-2 h-4 w-4"
                     />
+                  
                 </div>
+              
                             <Input
                                 class="w-1/2"
                                 id="email"
@@ -55,14 +39,19 @@
                                 :disabled="isLoading"
                                 v-model:model-value="state.email"
                             />
+                            <div vif="errors?.email" class="text-red-800">
+                        <span v-for="error in errors?.email?._errors">{{ error }}</span>
+                    </div>
                             <div class="flex items-center justify-center gap-2">
-                            <Label for="">Senha</Label>
+                            <Label name="password" for="">Senha</Label>
                                 <ph-key
                                 
                       
                         class="mr-2 h-4 w-4"
                     />
+                  
                 </div>
+               
                             <Input
                                 class="w-1/2"
                                 id="password"
@@ -74,9 +63,12 @@
                                 :disabled="isLoading"
                                 v-model:model-value="state.password"
                             />
+                            <div vif="errors?.password" class="text-red-800">
+                        <span v-for="error in errors?.password?._errors">{{ error }}</span>
+                    </div>
                         </div>
                         <div class="flex items-center justify-center">
-                            <Button class="mt-4" @click="signUpUser" :disabled="isLoading">
+                            <Button class="mt-4"  :disabled="isLoading">
                              
                                 Cadastrar
                                 <Loader class="ml-2"
@@ -106,7 +98,7 @@
                 >
                  
                     <ph-github-logo
-                        v-if="isLoading"
+                   
                      
                     />
                   
@@ -124,7 +116,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Loader from '@/primary/components/layouts/Loader.vue';
-import { PhGithubLogo, PhKey, PhEnvelope, PhUser } from '@phosphor-icons/vue';
+import { PhGithubLogo, PhKey, PhEnvelope } from '@phosphor-icons/vue';
 import M1H1 from "@/primary/components/typography/MyH1.vue"
 import { cn } from '@/secondary/lib/utils';
 import { Button } from '@/primary/components/ui/button';
@@ -134,12 +126,33 @@ import SideContainer from "@/primary/components/containers/SideContainer.vue"
 import {useUserStore} from "@/primary/infrastructure/store/user"
 const {state, signUpUser} = useUserStore()
 const isLoading = ref(false);
+const errors = ref<z.ZodFormattedError<formSchemaType> | null>(null)
 async function onSubmit(event: Event) {
+   
     event.preventDefault();
     isLoading.value = true;
-
+    const validSchema = schema.safeParse({
+        email: state.email,
+        password: state.password
+    })
+    if(!validSchema.success){
+      errors.value = validSchema.error.format()
+    } else {
+        errors.value = null
+        await signUpUser()
+    }
     setTimeout(() => {
         isLoading.value = false;
     }, 3000);
 }
+
+const schema = z.object({
+    email: z.string().email("Email inválido"),
+    password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
+})
+
+
+type formSchemaType = z.infer<typeof schema>
+
+
 </script>
