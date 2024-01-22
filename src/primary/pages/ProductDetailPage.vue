@@ -57,7 +57,7 @@
             type="single"
             collapsible
         >
-            <AccordionItem
+    <AccordionItem
                 class="block md:hidden"
                 value="item-1"
             >

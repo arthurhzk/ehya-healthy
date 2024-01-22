@@ -48,7 +48,9 @@
                         >
                     </div>
                     <div class="flex items-center justify-center">
-                        <Button class="mt-6 w-full bg-green-500"
+                        <Button
+                            @click="redirect"
+                            class="mt-6 w-full bg-green-500"
                             >FINALIZAR COMPRA</Button
                         >
                     </div>
