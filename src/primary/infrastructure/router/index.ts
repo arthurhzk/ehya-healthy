@@ -9,6 +9,7 @@ const AboutPage = () => import('@/primary/pages/AboutPage.vue');
 const CartPage = () => import('@/primary/pages/CartPage.vue');
 const ContactPage = () => import('@/primary/pages/ContactPage.vue');
 const RegisterPage = () => import('@/primary/pages/RegisterPage.vue');
+const LoginPage = () => import('@/primary/pages/LoginPage.vue');
 export enum RootPage {
     home = 'HOME_PAGE',
     product = 'PRODUCT_PAGE',
@@ -17,7 +18,8 @@ export enum RootPage {
     about = 'ABOUT_PAGE',
     cart = 'CART_PAGE',
     contact = 'CONTACT_PAGE',
-    register = 'REGISTER_PAGE'
+    register = 'REGISTER_PAGE',
+    login = 'LOGIN_PAGE'
 }
 
 export const routes: RouteRecordRaw[] = [
@@ -60,6 +62,11 @@ export const routes: RouteRecordRaw[] = [
         component: RegisterPage,
         name: RootPage.register,
         path: '/register'
+    },
+    {
+        component: LoginPage,
+        name: RootPage.login,
+        path: '/login'
     }
 ];
 

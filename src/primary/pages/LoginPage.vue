@@ -2,7 +2,7 @@
     <side-container>
         <main class="space-y-8">
             <div class="flex items-center justify-center">
-                <M1H1>Faça o seu Cadastro</M1H1>
+                <M1H1>Faça o seu Login</M1H1>
             </div>
             <section class="flex flex-col">
                 <main class="flex flex-col">
@@ -14,7 +14,7 @@
                             <div class="grid gap-2">
                                 <div class="grid gap-1">
                                     <div
-                                        class="flex flex-col gap-4 items-center justify-center"
+                                        class="flex flex-col gap-2 items-center justify-center"
                                     >
                                         <div
                                             class="flex items-center justify-center gap-2"
@@ -38,16 +38,7 @@
                                             :disabled="isLoading"
                                             v-model:model-value="state.email"
                                         />
-                                        <div
-                                            vif="errors?.email"
-                                            class="text-red-600"
-                                        >
-                                            <span
-                                                v-for="error in errors?.email
-                                                    ?._errors"
-                                                >{{ error }}</span
-                                            >
-                                        </div>
+
                                         <div
                                             class="flex items-center justify-center gap-2"
                                         >
@@ -70,25 +61,16 @@
                                             :disabled="isLoading"
                                             v-model:model-value="state.password"
                                         />
-                                        <div
-                                            vif="errors?.password"
-                                            class="text-red-600"
-                                        >
-                                            <span
-                                                v-for="error in errors?.password
-                                                    ?._errors"
-                                                >{{ error }}</span
-                                            >
-                                        </div>
                                     </div>
                                     <div
                                         class="flex items-center justify-center"
                                     >
                                         <Button
+                                            @click="signInUser"
                                             class="mt-4"
                                             :disabled="isLoading"
                                         >
-                                            Cadastrar
+                                            Acessar
                                             <Loader
                                                 class="ml-2"
                                                 v-if="isLoading"
@@ -114,6 +96,7 @@
                         </div>
                         <div class="flex items-center justify-center">
                             <Button
+                                @click="signInUser"
                                 variant="outline"
                                 type="button"
                                 :disabled="isLoading"
@@ -138,34 +121,17 @@ import M1H1 from '@/primary/components/typography/MyH1.vue';
 import { cn } from '@/secondary/lib/utils';
 import { Button } from '@/primary/components/ui/button';
 import { Input } from '@/primary/components/ui/input';
-import { z } from 'zod';
 import SideContainer from '@/primary/components/containers/SideContainer.vue';
 import { useUserStore } from '@/primary/infrastructure/store/user';
-const { state, signUpUser } = useUserStore();
+const { state, signInUser } = useUserStore();
 const isLoading = ref(false);
-const errors = ref<z.ZodFormattedError<formSchemaType> | null>(null);
+
 async function onSubmit(event: Event) {
     event.preventDefault();
     isLoading.value = true;
-    const validSchema = schema.safeParse({
-        email: state.email,
-        password: state.password
-    });
-    if (!validSchema.success) {
-        errors.value = validSchema.error.format();
-    } else {
-        errors.value = null;
-        await signUpUser();
-    }
+
     setTimeout(() => {
         isLoading.value = false;
     }, 3000);
 }
-
-const schema = z.object({
-    email: z.string().email('Email inválido.'),
-    password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres.')
-});
-
-type formSchemaType = z.infer<typeof schema>;
 </script>

@@ -39,6 +39,12 @@
                                     : ''
                             "
                             class="text-center cursor-pointer border-b-2 border-gray-200 py-2 md:border-none hover:text-orange-500"
+                            v-if="
+                                !(
+                                    path.name === 'Login' ||
+                                    path.name === 'Registrar'
+                                ) || !store.isLoggedIn
+                            "
                         >
                             {{
                                 path.name === 'Carrinho'
@@ -49,6 +55,15 @@
                     </router-link>
                 </div>
             </fwb-navbar-collapse>
+            <my-p v-if="store.isLoggedIn">
+                Logado como: {{ store.userEmail }}</my-p
+            >
+            <Button
+                variant="outline"
+                @click="store.signOutUser"
+                v-if="store.isLoggedIn"
+                >Finalizar</Button
+            >
         </template>
     </fwb-navbar>
 </template>
@@ -59,22 +74,24 @@ import MyP from '@/primary/components/typography/MyP.vue';
 import paths from '@/domain/data/paths';
 import { PhShoppingCart } from '@phosphor-icons/vue';
 import { useCartStore } from '@/primary/infrastructure/store/cart';
+import { useUserStore } from '@/primary/infrastructure/store/user';
+import Button from '@/primary/components/ui/button/Button.vue';
 import { computed } from 'vue';
-const store = useCartStore();
-
+const { purchasedItems } = useCartStore();
+const store = useUserStore();
 const cartLength = computed(() => {
-    if (store.purchasedItems.length == 0 || undefined) {
+    if (purchasedItems.length == 0 || undefined) {
         return '';
     } else {
-        return ` (${store.purchasedItems.length}) `;
+        return ` (${purchasedItems.length}) `;
     }
 });
 
 const cartLengthMobile = computed(() => {
-    if (store.purchasedItems.length == 0 || undefined) {
+    if (purchasedItems.length == 0 || undefined) {
         return '';
     } else {
-        return ` ${store.purchasedItems.length} `;
+        return ` ${purchasedItems.length} `;
     }
 });
 </script>
