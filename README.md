@@ -38,7 +38,7 @@ Sinta-se à vontade para contribuir com melhorias, correções de bugs ou novas 
 
 ## Licença
 
-Este projeto está sobre minha licença, se tiver interesse em contribuir, é só entrar em contato comigo!.
+Este projeto está sobre minha licença, se tiver interesse em contribuir, é só entrar em contato comigo!
 
 ---
 
