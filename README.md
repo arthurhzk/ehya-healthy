@@ -23,7 +23,7 @@ Certifique-se de ter as seguintes tecnologias instaladas:
 ## Instalação
 
 1. Clone o repositório: `git clone https://github.com/arthurhzk/voyager-backpacks-eccommerce.git`
-2. Navegue até o diretório do projeto: `cd voyager-backpacks-eccomerce`
+2. Navegue até o diretório do projeto: `cd voyager-backpacks-eccommerce`
 3. Instale as dependências: `npm install`
 
 
