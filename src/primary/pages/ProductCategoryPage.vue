@@ -21,11 +21,13 @@
                 </ul>
             </div>
 
-            <Input
-                v-model:model-value="search"
-                class="md:w-1/4"
-                placeholder="Pesquise aqui.."
-            />
+            <div class="flex items-center border-none gap-2 px-20">
+                <ph-magnifying-glass :size="24" />
+                <Input
+                    v-model:model-value="search"
+                    placeholder="Pesquise aqui.."
+                />
+            </div>
         </div>
         <div
             class="flex mt-4 flex-col items-center justify-center p-2 gap-4 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3"
@@ -49,6 +51,7 @@ import Input from '@/primary/components/ui/input/Input.vue';
 import productCategories from '@/domain/data/productCategories';
 import { useProducts } from '@/primary/infrastructure/composables/useProducts';
 import { onMounted } from 'vue';
+import { PhMagnifyingGlass } from '@phosphor-icons/vue';
 
 const { searchProducts, search, navigateToCategory } = useProducts();
 

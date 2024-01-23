@@ -14,7 +14,7 @@
                             <div class="grid gap-2">
                                 <div class="grid gap-1">
                                     <div
-                                        class="flex flex-col gap-4 items-center justify-center"
+                                        class="flex flex-col gap-2 items-center justify-center"
                                     >
                                         <div
                                             class="flex items-center justify-center gap-2"
@@ -28,7 +28,7 @@
                                         </div>
 
                                         <Input
-                                            class="w-1/2 md:w-1/3"
+                                            class="w-1/2 md:w-1/3 lg:w-1/4"
                                             id="email"
                                             placeholder="Digite o seu e-mail"
                                             type="email"
@@ -60,7 +60,7 @@
                                         </div>
 
                                         <Input
-                                            class="w-1/2 md:w-1/3"
+                                            class="w-1/2 md:w-1/3 lg:w-1/4"
                                             id="password"
                                             placeholder="Digite a sua senha"
                                             type="password"

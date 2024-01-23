@@ -16,7 +16,6 @@
                     color="#575757"
                     class="cursor-pointer md:hidden"
                 />
-
                 <span
                     :class="cartLengthMobile.length === 0 ? 'hidden' : ''"
                     class="w-5 flex items-center justify-center h-5 rounded-full bold text-white bg-red-700 absolute top-4 right-6 md:hidden"
@@ -58,12 +57,13 @@
             <my-p v-if="store.isLoggedIn">
                 Logado como: {{ store.userEmail }}</my-p
             >
-            <Button
-                variant="outline"
-                @click="store.signOutUser"
+            <alert-modal
                 v-if="store.isLoggedIn"
-                >Finalizar</Button
-            >
+                @click="store.signOutUser"
+                title="Finalizar sessao"
+                description="Tem certeza que deseja finalizar a sessao"
+                action="Finalizar"
+            ></alert-modal>
         </template>
     </fwb-navbar>
 </template>
@@ -72,10 +72,11 @@
 import { FwbNavbar, FwbNavbarCollapse, FwbNavbarLogo } from 'flowbite-vue';
 import MyP from '@/primary/components/typography/MyP.vue';
 import paths from '@/domain/data/paths';
+import AlertModal from '@/primary/components/layouts/AlertModal.vue';
 import { PhShoppingCart } from '@phosphor-icons/vue';
 import { useCartStore } from '@/primary/infrastructure/store/cart';
 import { useUserStore } from '@/primary/infrastructure/store/user';
-import Button from '@/primary/components/ui/button/Button.vue';
+
 import { computed } from 'vue';
 const { purchasedItems } = useCartStore();
 const store = useUserStore();

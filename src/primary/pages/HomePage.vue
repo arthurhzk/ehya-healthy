@@ -20,8 +20,10 @@
                     <my-p>MOCHILAS</my-p>
                     <my-h3>Mochilas de couro de qualidade.</my-h3>
                     <my-p>Nossos produtos são todos feitos à mão.</my-p>
-                    <my-p class="font-semibold underline mt-4"
-                        >Ver a nossa coleção</my-p
+                    <router-link to="/products/backpack">
+                        <my-p class="font-semibold underline mt-4"
+                            >Ver a nossa coleção</my-p
+                        ></router-link
                     >
                 </div>
             </div>
@@ -47,14 +49,8 @@
                 >Aproveite agora os melhores descontos, corra que é por tempo
                 ilimitado!
             </my-p>
-            <my-h2 class="text-center font-bold mt-6"
-                >05d : 11h : 23m : 02s</my-h2
-            >
-            <Button
-                class="my-8"
-                variant="default"
-                >Compre agora!</Button
-            >
+            <my-h2 class="text-center font-bold mt-6">{{ time }}</my-h2>
+
             <DescriptionCard class="observe" />
             <NewsletterCard
                 class="observe"
@@ -73,15 +69,16 @@ import SideContainer from '@/primary/components/containers/SideContainer.vue';
 import MyH2 from '@/primary/components/typography/MyH2.vue';
 import MyH3 from '@/primary/components/typography/MyH3.vue';
 import MyP from '@/primary/components/typography/MyP.vue';
-import Button from '@/primary/components/ui/button/Button.vue';
 import brands from '@/domain/data/brands';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
 import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
 import { onMounted } from 'vue';
 const sliceProductHomePage = computed(() => {
     return homeProducts.slice(0, 3);
 });
+
+const time = ref(`05d 12h 30m 00s`);
 
 onMounted(() => {
     const observer = new IntersectionObserver((entries) => {

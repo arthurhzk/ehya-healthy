@@ -28,7 +28,7 @@
                                         </div>
 
                                         <Input
-                                            class="w-1/2 md:w-1/3"
+                                            class="w-1/2 md:w-1/3 lg:w-1/4"
                                             id="email"
                                             placeholder="Digite o seu e-mail"
                                             type="email"
@@ -51,7 +51,7 @@
                                         </div>
 
                                         <Input
-                                            class="w-1/2 md:w-1/3"
+                                            class="w-1/2 md:w-1/3 lg:w-1/4"
                                             id="password"
                                             placeholder="Digite a sua senha"
                                             type="password"
