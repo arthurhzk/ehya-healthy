@@ -49,7 +49,6 @@
                 >Aproveite agora os melhores descontos, corra que é por tempo
                 ilimitado!
             </my-p>
-            <my-h2 class="text-center font-bold mt-6">{{ time }}</my-h2>
 
             <DescriptionCard class="observe" />
             <NewsletterCard
@@ -66,19 +65,16 @@
 import HomeCard from '@/primary/components/layouts/HomeCard.vue';
 import homeProducts from '@/domain/data/homeProducts';
 import SideContainer from '@/primary/components/containers/SideContainer.vue';
-import MyH2 from '@/primary/components/typography/MyH2.vue';
 import MyH3 from '@/primary/components/typography/MyH3.vue';
 import MyP from '@/primary/components/typography/MyP.vue';
 import brands from '@/domain/data/brands';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import NewsletterCard from '@/primary/components/layouts/NewsletterCard.vue';
 import DescriptionCard from '@/primary/components/layouts/DescriptionCard.vue';
 import { onMounted } from 'vue';
 const sliceProductHomePage = computed(() => {
     return homeProducts.slice(0, 3);
 });
-
-const time = ref(`05d 12h 30m 00s`);
 
 onMounted(() => {
     const observer = new IntersectionObserver((entries) => {

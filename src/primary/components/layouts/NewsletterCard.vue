@@ -8,7 +8,6 @@
                 <ph-envelope-simple :size="24" />
                 <Input
                     class="md:border-none"
-                    type="email"
                     placeholder="Insira o seu e-mail"
                 />
             </div>

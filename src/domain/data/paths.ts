@@ -11,14 +11,6 @@ const paths: pathTypes[] = [
     },
 
     {
-        name: 'Sobre',
-        pathName: '/about'
-    },
-    {
-        name: 'Contato',
-        pathName: '/contact'
-    },
-    {
         name: `Carrinho`,
         pathName: '/cart'
     },

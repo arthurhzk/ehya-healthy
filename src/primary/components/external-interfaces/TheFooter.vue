@@ -1,5 +1,5 @@
 <template>
-    <section class="absolute bottom-50">
+    <section class="absolute">
         <fwb-footer>
             <fwb-footer-copyright
                 by="Voyage Leather Goods co.™"
@@ -7,7 +7,12 @@
                 copyright-message="Todos os direitos reservados."
             />
             <fwb-footer-link-group>
-                <fwb-footer-link href="#"> Sobre </fwb-footer-link>
+                <fwb-footer-link
+                    class="ml-2"
+                    href="#"
+                >
+                    Sobre
+                </fwb-footer-link>
                 <fwb-footer-link href="#">
                     Politicas de Privacidade
                 </fwb-footer-link>

@@ -36,8 +36,7 @@
                         <div class="flex items-center">
                             <ph-envelope-simple :size="24" />
                             <Input
-                                class="md:border-none"
-                                type="text"
+                                class="md:border-none bg-slate-50"
                                 placeholder="Adicione um cupom"
                             />
                         </div>
