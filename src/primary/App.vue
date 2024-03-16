@@ -1,34 +1,31 @@
 <template>
-    <the-nav></the-nav>
-    <router-view v-slot="{ Component }">
-        <transition
-            name="fade"
-            mode="out-in"
-        >
-            <component :is="Component" />
-        </transition>
-    </router-view>
+    <TheNav
+        v-if="route !== undefined && route.name !== 'Login'"
+        class="hidden md:block"
+    />
+    <RouterView />
+
     <Toaster />
-    <the-footer></the-footer>
+    <TheFooter v-if="route !== undefined && route.name !== 'Login'" />
 </template>
 
 <script setup lang="ts">
-import TheNav from '@/primary/components/external-interfaces/TheNav.vue';
-import TheFooter from '@/primary/components/external-interfaces/TheFooter.vue';
 import Toaster from '@/primary/components/ui/toast/Toaster.vue';
+import TheNav from '@/primary/components/interfaces/TheNav.vue';
+import TheFooter from '@/primary/components/interfaces/TheFooter.vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 </script>
 
 <style>
-.fade-enter-from {
-    opacity: 0;
-}
-
-.fade-enter-active {
-    transition: all 0.5s linear;
-}
-
+.fade-enter-from,
 .fade-leave-to {
-    transition: all 0s lienar;
     opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.5s linear;
 }
 </style>

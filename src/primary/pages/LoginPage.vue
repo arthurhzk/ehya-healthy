@@ -1,137 +1,110 @@
 <template>
-    <side-container>
-        <main class="space-y-8">
-            <div class="flex items-center justify-center">
-                <M1H1>Faça o seu Login</M1H1>
+    <div
+        class="container relative h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0"
+    >
+        <div
+            class="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex"
+        >
+            <div class="absolute inset-0 bg-zinc-900"></div>
+            <div class="relative z-20 flex items-center text-lg font-medium">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    class="mr-2 h-6 w-6"
+                >
+                    <path
+                        d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"
+                    />
+                </svg>
+                ehya
             </div>
-            <section class="flex flex-col">
-                <main class="flex flex-col">
-                    <div :class="cn('grid gap-6', $attrs.class ?? '')">
-                        <form
-                            class="space-y-4"
-                            @submit="onSubmit"
-                        >
-                            <div class="grid gap-2">
-                                <div class="grid gap-1">
-                                    <div
-                                        class="flex flex-col gap-2 items-center justify-center"
-                                    >
-                                        <div
-                                            class="flex items-center justify-center gap-2"
-                                        >
-                                            <Label
-                                                name="email"
-                                                for=""
-                                                >Email</Label
-                                            >
-                                            <ph-envelope class="mr-2 h-4 w-4" />
-                                        </div>
-
-                                        <Input
-                                            class="w-1/2 md:w-1/3 lg:w-1/4"
-                                            id="email"
-                                            placeholder="Digite o seu e-mail"
-                                            type="email"
-                                            auto-capitalize="none"
-                                            auto-complete="email"
-                                            auto-correct="off"
-                                            :disabled="isLoading"
-                                            v-model:model-value="state.email"
-                                        />
-
-                                        <div
-                                            class="flex items-center justify-center gap-2"
-                                        >
-                                            <Label
-                                                name="password"
-                                                for=""
-                                                >Senha</Label
-                                            >
-                                            <ph-key class="mr-2 h-4 w-4" />
-                                        </div>
-
-                                        <Input
-                                            class="w-1/2 md:w-1/3 lg:w-1/4"
-                                            id="password"
-                                            placeholder="Digite a sua senha"
-                                            type="password"
-                                            auto-capitalize="none"
-                                            auto-complete="email"
-                                            auto-correct="off"
-                                            :disabled="isLoading"
-                                            v-model:model-value="state.password"
-                                        />
-                                    </div>
-                                    <div
-                                        class="flex items-center justify-center"
-                                    >
-                                        <Button
-                                            @click="signInUser"
-                                            class="mt-4"
-                                            :disabled="isLoading"
-                                        >
-                                            Acessar
-                                            <Loader
-                                                class="ml-2"
-                                                v-if="isLoading"
-                                            />
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="relative">
-                            <div class="absolute inset-0 flex items-center">
-                                <span class="w-full border-t" />
-                            </div>
-                            <div
-                                class="relative flex justify-center text-xs uppercase"
-                            >
-                                <span
-                                    class="bg-background px-2 text-muted-foreground"
-                                >
-                                    Ou continuar como
-                                </span>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <Button
-                                @click="signInUser"
-                                variant="outline"
-                                type="button"
-                                :disabled="isLoading"
-                            >
-                                <ph-github-logo />
-
-                                GitHub
-                            </Button>
-                        </div>
-                    </div>
-                </main>
-            </section>
-        </main>
-    </side-container>
+            <div class="relative z-20 mt-auto">
+                <blockquote class="space-y-2">
+                    <p class="text-lg">
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. Sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua."
+                    </p>
+                    <footer class="text-sm">John Doe</footer>
+                </blockquote>
+            </div>
+        </div>
+        <div class="lg:p-8">
+            <div
+                class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]"
+            >
+                <div class="flex flex-col space-y-2 text-center">
+                    <h1 class="text-2xl font-semibold tracking-tight">
+                        Iniciar
+                    </h1>
+                    <p class="text-sm text-muted-foreground">
+                        Coloque seu email e senha para iniciar
+                    </p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <Label for="email">Email:</Label>
+                    <Input
+                        v-model:modelValue="user.email"
+                        id="email"
+                        type="email"
+                        placeholder="johndoe@email.com"
+                    />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <Label for="password">Senha:</Label>
+                    <Input
+                        v-model:modelValue="user.password"
+                        id="password"
+                        type="password"
+                    />
+                </div>
+                <Button
+                    @click="signIn"
+                    class="w-full"
+                >
+                    Entrar
+                    <Loader class="ml-4 animate-spin" />
+                </Button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import Loader from '@/primary/components/layouts/Loader.vue';
-import { PhGithubLogo, PhKey, PhEnvelope } from '@phosphor-icons/vue';
-import M1H1 from '@/primary/components/typography/MyH1.vue';
-import { cn } from '@/secondary/lib/utils';
-import { Button } from '@/primary/components/ui/button';
 import { Input } from '@/primary/components/ui/input';
-import SideContainer from '@/primary/components/containers/SideContainer.vue';
-import { useUserStore } from '@/primary/infrastructure/store/user';
-const { state, signInUser } = useUserStore();
-const isLoading = ref(false);
+import { Label } from '@/primary/components/ui/label';
+import { Button } from '@/primary/components/ui/button';
 
-async function onSubmit(event: Event) {
-    event.preventDefault();
-    isLoading.value = true;
+import { reactive } from 'vue';
+import { useToast } from '@/primary/components/ui/toast';
 
-    setTimeout(() => {
-        isLoading.value = false;
-    }, 3000);
-}
+import { Loader } from 'lucide-vue-next';
+
+const { toast } = useToast();
+
+const user = reactive({
+    email: '',
+    password: ''
+});
+
+const signIn = async () => {
+    try {
+        toast({
+            title: 'Sucesso',
+            description: 'Usuário logado com sucesso',
+            class: 'bg-[#8a4baf] text-white'
+        });
+    } catch (e: unknown) {
+        toast({
+            title: 'Erro',
+            description: e instanceof Error ? e.message : 'Ocorreu um erro',
+            variant: 'destructive'
+        });
+    }
+};
 </script>
