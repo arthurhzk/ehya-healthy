@@ -13,7 +13,11 @@
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction class="mt-2">Adicionar</AlertDialogAction>
+                <AlertDialogAction
+                    @click="handleClick"
+                    class="mt-2"
+                    >Adicionar</AlertDialogAction
+                >
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
@@ -33,6 +37,8 @@ import {
 } from '@/primary/components/ui/alert-dialog';
 import { Button } from '@/primary/components/ui/button';
 
+const emit = defineEmits(['click']);
+
 const props = defineProps({
     title: {
         type: String,
@@ -48,4 +54,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const handleClick = () => {
+    emit('click');
+};
 </script>

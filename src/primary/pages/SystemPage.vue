@@ -7,22 +7,51 @@
                 Dashboard
             </h1>
 
-            <TheCalendar />
+            <Popover>
+                <PopoverTrigger as-child>
+                    <Button
+                        :variant="'outline'"
+                        :class="
+                            cn(
+                                'w-[280px] justify-start text-left font-normal',
+                                !date && 'text-muted-foreground'
+                            )
+                        "
+                    >
+                        <CalendarIcon class="mr-2 h-4 w-4" />
+                        <span>{{
+                            date
+                                ? format(date, 'PPP', { locale: ptBR })
+                                : 'Escolha uma data'
+                        }}</span>
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent class="w-auto p-0">
+                    <Calendar v-model="date" />
+                </PopoverContent>
+            </Popover>
 
             <AddMonitoring
                 title="Faça o seu Checkup Diariamente"
                 description="Utilize nosso serviço de Checkup para fazer o Monitoramento de sua Saúde"
                 button-text="Adicionar Monitoramento"
+                @click="addData"
             >
-                <div
-                    class="grid w-full max-w-sm items-center gap-1.5"
-                    v-for="(input, index) in inputs"
-                    :key="index"
-                >
+                <div class="grid w-full max-w-sm items-center gap-1.5">
                     <Input
-                        :id="input.id"
-                        :type="input.type"
-                        :placeholder="input.placeholder"
+                        type="number"
+                        placeholder="Glicemia"
+                        v-model:model-value="comp.state.glicemy"
+                    />
+                    <Input
+                        type="number"
+                        placeholder="Pressão Arterial"
+                        v-model:model-value="comp.state.bloodPressure"
+                    />
+                    <Input
+                        type="number"
+                        placeholder="Batimentos Cardíacos"
+                        v-model:model-value="comp.state.heartRate"
                     />
                 </div>
             </AddMonitoring>
@@ -47,6 +76,7 @@
                 :risk="card.risk"
                 :value="card.value"
                 :icon="card.icon"
+                :rateIcon="card.rateIcon"
             />
         </v-col>
     </v-row>
@@ -58,34 +88,131 @@
 import TheSidebar from '@/primary/components/interfaces/TheSidebar.vue';
 import MonitoringCard from '@/primary/components/interfaces/MonitoringCard.vue';
 import SideContainer from '@/primary/components/container/SideContainer.vue';
-import TheCalendar from '@/primary/components/interfaces/TheCalendar.vue';
 import MonitoringChart from '@/primary/components/interfaces/MonitoringChart.vue';
 import AddMonitoring from '@/primary/components/interfaces/AddMonitoring.vue';
-import { Input } from '@/primary/components/ui/input';
-import { ref } from 'vue';
+import useMonitoring from '@/primary/infrastructure/composables/useMonitoring';
+import { cn } from '@/secondary/lib/utils';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-vue-next';
+import { ptBR } from 'date-fns/locale';
 
-const inputs = ref([
-    { id: 'glicemia', type: 'email', placeholder: 'Glicemia' },
-    { id: 'pressao', type: 'email', placeholder: 'Pressão Arterial' },
-    { id: 'batimentos', type: 'email', placeholder: 'Batimentos Cardíacos' }
-]);
-const cards = ref([
+import { Button } from '@/primary/components/ui/button';
+import { Calendar } from '@/primary/components/ui/calendar';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger
+} from '@/primary/components/ui/popover';
+import { Input } from '@/primary/components/ui/input';
+import { ref, computed, onMounted, watch } from 'vue';
+import { startOfDay, endOfDay } from 'date-fns';
+
+const comp = useMonitoring();
+
+const date = ref<Date>(new Date());
+
+const dateBounds = computed(() => {
+    return {
+        start: startOfDay(date.value),
+        end: endOfDay(date.value)
+    };
+});
+
+watch(
+    () => {
+        date.value;
+    },
+    (newVal) => {
+        comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end);
+    },
+    {
+        deep: true
+    }
+);
+
+onMounted(() => {
+    comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end);
+});
+
+const getLastValue = (property: string) =>
+    computed(() => {
+        if (comp.monitoring.value && comp.monitoring.value.length > 0) {
+            return comp.monitoring.value[comp.monitoring.value.length - 1][
+                property
+            ];
+        }
+        return null;
+    });
+
+const getRateIcon = (feedback: string) =>
+    computed(() => {
+        if (feedback === 'Elevado') {
+            return 'mdi-alert';
+        } else if (feedback === 'Normal') {
+            return 'mdi-check-circle';
+        } else {
+            return 'mdi-arrow-down-bold-circle';
+        }
+    });
+
+const getLastGlicemy = getLastValue('glicemy');
+const getLastBloodPressure = getLastValue('blood_pressure');
+const getLastHeartRate = getLastValue('heart_rate');
+
+const addData = async () => {
+    await comp.addData();
+    await comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end);
+};
+
+const glicemyFeedback = computed(() => {
+    if (getLastGlicemy.value > 99) {
+        return 'Elevado';
+    } else if (getLastGlicemy.value > 70) {
+        return 'Normal';
+    } else {
+        return 'Baixo';
+    }
+});
+
+const heartRateFeedback = computed(() => {
+    if (getLastHeartRate.value > 100) {
+        return 'Elevado';
+    } else if (getLastHeartRate.value > 60) {
+        return 'Normal';
+    } else {
+        return 'Baixo';
+    }
+});
+
+const bloodPressureFeedback = computed(() => {
+    if (getLastBloodPressure.value > 120) {
+        return 'Elevado';
+    } else if (getLastBloodPressure.value > 80) {
+        return 'Normal';
+    } else {
+        return 'Baixo';
+    }
+});
+const cards = computed(() => [
     {
         title: 'Glicemia',
-        risk: 'Elevado',
-        value: '120 mg/dL',
+        risk: glicemyFeedback.value,
+        value: getLastGlicemy.value,
+        rateIcon: getRateIcon(glicemyFeedback.value).value,
         icon: 'mdi-diabetes'
     },
     {
         title: 'Pressão Arterial',
-        risk: 'Normal',
-        value: '80/120 mmHg',
+        risk: bloodPressureFeedback.value,
+        value: getLastBloodPressure.value,
+        rateIcon: getRateIcon(bloodPressureFeedback.value).value,
         icon: 'mdi-hospital'
     },
     {
         title: 'Batimentos Cardíacos',
-        risk: 'Baixo',
-        value: '60 bpm',
+        risk: heartRateFeedback.value,
+        value: getLastHeartRate.value,
+        rateIcon: getRateIcon(heartRateFeedback.value).value,
         icon: 'mdi-heart-pulse'
     }
 ]);

@@ -18,4 +18,10 @@ import Toaster from '@/primary/components/ui/toast/Toaster.vue';
 .fade-leave-active {
     transition: all 0.5s linear;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>

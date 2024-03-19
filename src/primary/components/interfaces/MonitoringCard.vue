@@ -8,7 +8,7 @@
                 <v-icon
                     class="me-1 pb-1"
                     color="error"
-                    icon="mdi-alert"
+                    :icon="props.rateIcon"
                     size="18"
                 ></v-icon>
 
@@ -21,6 +21,11 @@
                 align="center"
                 no-gutters
             >
+                <Loader
+                    class="animate-spin"
+                    v-if="!props.value"
+                />
+
                 <v-col
                     class="text-h4"
                     cols="6"
@@ -57,6 +62,12 @@ const props = defineProps({
     icon: {
         type: String,
         default: 'mdi-heart-pulse'
+    },
+    rateIcon: {
+        type: String,
+        default: 'mdi-arrow-up'
     }
 });
+
+import { Loader } from 'lucide-vue-next';
 </script>
