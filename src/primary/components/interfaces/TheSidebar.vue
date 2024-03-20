@@ -18,21 +18,29 @@
                     density="compact"
                     nav
                 >
-                    <v-list-item
-                        prepend-icon="mdi-home-city"
-                        title="Home"
-                        value="home"
-                    ></v-list-item>
-                    <v-list-item
-                        prepend-icon="mdi-account"
-                        title="My Account"
-                        value="account"
-                    ></v-list-item>
-                    <v-list-item
-                        prepend-icon="mdi-account-group-outline"
-                        title="Users"
-                        value="users"
-                    ></v-list-item>
+                    <router-link to="/system">
+                        <v-list-item
+                            prepend-icon="mdi-home-city"
+                            title="Home"
+                            value="home"
+                        ></v-list-item>
+                    </router-link>
+
+                    <router-link to="/pills">
+                        <v-list-item
+                            prepend-icon="mdi-pill"
+                            title="My Account"
+                            value="account"
+                        ></v-list-item>
+                    </router-link>
+
+                    <router-link to="/exercises">
+                        <v-list-item
+                            prepend-icon="mdi-dumbbell"
+                            title="Users"
+                            value="users"
+                        ></v-list-item>
+                    </router-link>
                 </v-list>
             </v-navigation-drawer>
         </v-layout>

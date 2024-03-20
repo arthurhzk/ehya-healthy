@@ -1,5 +1,12 @@
 <template>
-    <RouterView />
+    <router-view v-slot="{ Component }">
+        <transition
+            name="fade"
+            mode="out-in"
+        >
+            <div><component :is="Component" /></div>
+        </transition>
+    </router-view>
 
     <Toaster />
 </template>
@@ -9,14 +16,14 @@ import Toaster from '@/primary/components/ui/toast/Toaster.vue';
 </script>
 
 <style>
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
 .fade-enter-active,
 .fade-leave-active {
-    transition: all 0.5s linear;
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 
 input::-webkit-outer-spin-button,

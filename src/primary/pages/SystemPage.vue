@@ -80,8 +80,18 @@
             />
         </v-col>
     </v-row>
+    <div class="big-chart"><MonitoringChart /></div>
 
-    <div class="chart-size"><MonitoringChart /></div>
+    <AlertDialog>
+        <AlertDialogTrigger as-child>
+            <div class="flex items-center justify-center mt-8">
+                <Button class="sm:block md:hidden"> Abrir Gráfico </Button>
+            </div>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+            <div class="small-chart"><MonitoringChart /></div
+        ></AlertDialogContent>
+    </AlertDialog>
 </template>
 
 <script setup lang="ts">
@@ -90,11 +100,12 @@ import MonitoringCard from '@/primary/components/interfaces/MonitoringCard.vue';
 import SideContainer from '@/primary/components/container/SideContainer.vue';
 import MonitoringChart from '@/primary/components/interfaces/MonitoringChart.vue';
 import AddMonitoring from '@/primary/components/interfaces/AddMonitoring.vue';
+
 import useMonitoring from '@/primary/infrastructure/composables/useMonitoring';
 import { cn } from '@/secondary/lib/utils';
-import { format } from 'date-fns';
-import { Calendar as CalendarIcon } from 'lucide-vue-next';
+import { format, startOfDay, endOfDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { Calendar as CalendarIcon } from 'lucide-vue-next';
 
 import { Button } from '@/primary/components/ui/button';
 import { Calendar } from '@/primary/components/ui/calendar';
@@ -104,11 +115,16 @@ import {
     PopoverTrigger
 } from '@/primary/components/ui/popover';
 import { Input } from '@/primary/components/ui/input';
+
 import { ref, computed, onMounted, watch } from 'vue';
-import { startOfDay, endOfDay } from 'date-fns';
+
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogTrigger
+} from '@/primary/components/ui/alert-dialog';
 
 const comp = useMonitoring();
-
 const date = ref<Date>(new Date());
 
 const dateBounds = computed(() => {
@@ -119,15 +135,9 @@ const dateBounds = computed(() => {
 });
 
 watch(
-    () => {
-        date.value;
-    },
-    (newVal) => {
-        comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end);
-    },
-    {
-        deep: true
-    }
+    () => date.value,
+    () => comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end),
+    { deep: true }
 );
 
 onMounted(() => {
@@ -146,13 +156,9 @@ const getLastValue = (property: string) =>
 
 const getRateIcon = (feedback: string) =>
     computed(() => {
-        if (feedback === 'Elevado') {
-            return 'mdi-alert';
-        } else if (feedback === 'Normal') {
-            return 'mdi-check-circle';
-        } else {
-            return 'mdi-arrow-down-bold-circle';
-        }
+        if (feedback === 'Elevado') return 'mdi-alert';
+        if (feedback === 'Normal') return 'mdi-check-circle';
+        return 'mdi-arrow-down-bold-circle';
     });
 
 const getLastGlicemy = getLastValue('glicemy');
@@ -164,35 +170,22 @@ const addData = async () => {
     await comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end);
 };
 
-const glicemyFeedback = computed(() => {
-    if (getLastGlicemy.value > 99) {
-        return 'Elevado';
-    } else if (getLastGlicemy.value > 70) {
-        return 'Normal';
-    } else {
-        return 'Baixo';
-    }
-});
+const getFeedback = (value: number, high: number, normal: number) => {
+    if (value > high) return 'Elevado';
+    if (value > normal) return 'Normal';
+    return 'Baixo';
+};
 
-const heartRateFeedback = computed(() => {
-    if (getLastHeartRate.value > 100) {
-        return 'Elevado';
-    } else if (getLastHeartRate.value > 60) {
-        return 'Normal';
-    } else {
-        return 'Baixo';
-    }
-});
+const glicemyFeedback = computed(() =>
+    getFeedback(getLastGlicemy.value, 99, 70)
+);
+const heartRateFeedback = computed(() =>
+    getFeedback(getLastHeartRate.value, 100, 60)
+);
+const bloodPressureFeedback = computed(() =>
+    getFeedback(getLastBloodPressure.value, 120, 80)
+);
 
-const bloodPressureFeedback = computed(() => {
-    if (getLastBloodPressure.value > 120) {
-        return 'Elevado';
-    } else if (getLastBloodPressure.value > 80) {
-        return 'Normal';
-    } else {
-        return 'Baixo';
-    }
-});
 const cards = computed(() => [
     {
         title: 'Glicemia',
@@ -219,10 +212,26 @@ const cards = computed(() => [
 </script>
 
 <style scoped>
-.chart-size {
+.big-chart {
     width: 700px;
     height: 400px;
     margin: auto;
     margin-top: 50px;
+    display: block;
+}
+
+.small-chart {
+    width: 100%;
+    height: 400px;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    .big-chart {
+        display: none;
+    }
+    .small-chart {
+        display: block;
+    }
 }
 </style>
