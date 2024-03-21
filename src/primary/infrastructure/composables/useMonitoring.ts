@@ -17,8 +17,7 @@ function useMonitoring() {
     const state = reactive<Monitoring>(initialState);
 
     const monitoring = ref<Monitoring | any>();
-
-    const date = ref<Date>(new Date());
+    const monthMonitoring = ref<Monitoring | any>();
 
     const fetchMonitoring = async (start: Date, end: Date) => {
         const response = await supabase
@@ -30,6 +29,18 @@ function useMonitoring() {
             throw new Error(response.error.message);
         }
         monitoring.value = response.data;
+    };
+
+    const fetchMonthMonitoring = async (start: Date, end: Date) => {
+        const response = await supabase
+            .from('monitoring')
+            .select('*')
+            .gte('created_at', start.toISOString())
+            .lte('created_at', end.toISOString());
+        if (response.error) {
+            throw new Error(response.error.message);
+        }
+        monthMonitoring.value = response.data;
     };
 
     const addData = async () => {
@@ -45,7 +56,14 @@ function useMonitoring() {
             throw new Error(response.error.message);
         }
     };
-    return { state, fetchMonitoring, addData, monitoring };
+    return {
+        state,
+        fetchMonitoring,
+        addData,
+        monitoring,
+        fetchMonthMonitoring,
+        monthMonitoring
+    };
 }
 
 export default useMonitoring;

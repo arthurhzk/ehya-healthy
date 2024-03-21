@@ -47,7 +47,7 @@
                     }"
                 >
                     <VisStackedBar
-                        :x="(d: Data, i: number) => i"
+                        :x="(_d: Data, i: number) => i"
                         :y="(d: any) => d.calories"
                         :bar-padding="0.1"
                         :rounded-corners="0"

@@ -80,57 +80,94 @@
             />
         </v-col>
     </v-row>
-    <div class="big-chart"><MonitoringChart /></div>
+    <div class="flex items-center justify-center">
+        <div class="fallbackValueSwitch chart-size">
+            <p class="text-center">Comparatório</p>
+            <VisBulletLegend :items="items" />
+            <VisXYContainer
+                :duration="0"
+                :height="300"
+                :xDomain="[1, 12]"
+                :yDomain="[0, 600]"
+            >
+                <VisLine
+                    :data="glicemyData"
+                    :x="(d: any) => d.x"
+                    :y="(d: any) => d.y"
+                    color="#0000FF"
+                />
+                <VisLine
+                    :data="bloodPressureData"
+                    :x="(d: any) => d.x"
+                    :y="(d: any) => d.y"
+                    color="#FF6347"
+                />
+                <VisLine
+                    :data="heartRateData"
+                    :x="(d: any) => d.x"
+                    :y="(d: any) => d.y"
+                    color="#FFD700"
+                />
 
-    <AlertDialog>
-        <AlertDialogTrigger as-child>
-            <div class="flex items-center justify-center mt-8">
-                <Button class="sm:block md:hidden"> Abrir Gráfico </Button>
-            </div>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-            <div class="small-chart"><MonitoringChart /></div
-        ></AlertDialogContent>
-    </AlertDialog>
+                <VisAxis
+                    type="x"
+                    :numTicks="12"
+                    label="Média Anual"
+                />
+                <VisAxis
+                    type="y"
+                    label="Relatório Mensal"
+                    :tickValues="[0, 200, 400, fallbackValue, 600]"
+                    :numTicks="6"
+                />
+            </VisXYContainer>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 import TheSidebar from '@/primary/components/interfaces/TheSidebar.vue';
 import MonitoringCard from '@/primary/components/interfaces/MonitoringCard.vue';
 import SideContainer from '@/primary/components/container/SideContainer.vue';
-import MonitoringChart from '@/primary/components/interfaces/MonitoringChart.vue';
 import AddMonitoring from '@/primary/components/interfaces/AddMonitoring.vue';
-
 import useMonitoring from '@/primary/infrastructure/composables/useMonitoring';
+import { legendItems } from '@/domain/data/system-chart';
 import { cn } from '@/secondary/lib/utils';
-import { format, startOfDay, endOfDay } from 'date-fns';
+import {
+    format,
+    startOfDay,
+    endOfDay,
+    startOfMonth,
+    endOfMonth,
+    getMonth
+} from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Calendar as CalendarIcon } from 'lucide-vue-next';
-
 import { Button } from '@/primary/components/ui/button';
 import { Calendar } from '@/primary/components/ui/calendar';
+import { VisXYContainer, VisLine, VisBulletLegend, VisAxis } from '@unovis/vue';
 import {
     Popover,
     PopoverContent,
     PopoverTrigger
 } from '@/primary/components/ui/popover';
 import { Input } from '@/primary/components/ui/input';
-
 import { ref, computed, onMounted, watch } from 'vue';
-
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogTrigger
-} from '@/primary/components/ui/alert-dialog';
 
 const comp = useMonitoring();
 const date = ref<Date>(new Date());
-
+const curr = ref(0);
 const dateBounds = computed(() => {
     return {
         start: startOfDay(date.value),
         end: endOfDay(date.value)
+    };
+});
+
+const monthBounds = computed(() => {
+    return {
+        start: startOfMonth(date.value),
+        end: endOfMonth(date.value)
     };
 });
 
@@ -142,6 +179,7 @@ watch(
 
 onMounted(() => {
     comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end);
+    comp.fetchMonthMonitoring(monthBounds.value.start, monthBounds.value.end);
 });
 
 const getLastValue = (property: string) =>
@@ -209,6 +247,74 @@ const cards = computed(() => [
         icon: 'mdi-heart-pulse'
     }
 ]);
+
+const glicemyReducer = computed(() => {
+    if (!comp.monthMonitoring.value) {
+        return {};
+    }
+    return comp.monthMonitoring.value.reduce((acc: any, sum: any) => {
+        const month = getMonth(new Date(sum.created_at));
+        if (!acc[month]) {
+            acc[month] = 0;
+        }
+        acc[month] += parseInt(sum.glicemy);
+        return acc;
+    }, {});
+});
+
+const bloodPressureReducer = computed(() => {
+    if (!comp.monthMonitoring.value) {
+        return {};
+    }
+    return comp.monthMonitoring.value.reduce((acc: any, sum: any) => {
+        const month = getMonth(new Date(sum.created_at));
+        if (!acc[month]) {
+            acc[month] = 0;
+        }
+        acc[month] += parseInt(sum.blood_pressure);
+        return acc;
+    }, {});
+});
+
+const heartRateReducer = computed(() => {
+    if (!comp.monthMonitoring.value) {
+        return {};
+    }
+    return comp.monthMonitoring.value.reduce((acc: any, sum: any) => {
+        const month = getMonth(new Date(sum.created_at));
+        if (!acc[month]) {
+            acc[month] = 0;
+        }
+        acc[month] += parseInt(sum.heart_rate);
+        return acc;
+    }, {});
+});
+
+const fallbackValue = computed(() => legendItems[curr.value]);
+
+const items = computed(() =>
+    legendItems.map((o) => ({
+        name: o.name
+    }))
+);
+
+const glicemyData = computed(() =>
+    Array.from({ length: 12 }, (_, i) => {
+        return { x: i + 1, y: glicemyReducer.value[i] || 0 };
+    })
+);
+
+const bloodPressureData = computed(() =>
+    Array.from({ length: 12 }, (_, i) => {
+        return { x: i + 1, y: bloodPressureReducer.value[i] || 0 };
+    })
+);
+
+const heartRateData = computed(() =>
+    Array.from({ length: 12 }, (_, i) => {
+        return { x: i + 1, y: heartRateReducer.value[i] || 0 };
+    })
+);
 </script>
 
 <style scoped>
@@ -233,5 +339,23 @@ const cards = computed(() => [
     .small-chart {
         display: block;
     }
+}
+
+.fallbackValueSwitch {
+    width: 415px;
+    background-color: #f8f8f8;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid #f4f4f4;
+    margin-bottom: 10px;
+}
+
+.chart-size {
+    width: 50%;
+    height: 300px;
+    margin: auto;
+    margin-top: 50px;
+    display: block;
 }
 </style>

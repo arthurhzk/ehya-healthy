@@ -103,7 +103,7 @@ import {
 } from '@/primary/components/ui/table';
 
 import { Button } from '@/primary/components/ui/button';
-import { Input } from '@/primary/components/ui/input';
+
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
