@@ -99,11 +99,19 @@ import { startOfWeek, endOfWeek } from 'date-fns';
 import DataTable from '@/primary/components/interfaces/payments/DataTable.vue';
 import { columns } from '@/primary/components/interfaces/payments/columns';
 
+import { toast } from 'vue-sonner';
+
 const { fetchFitness, addCalories, fitness } = useFitness();
 
-const add = () => {
-    addCalories(calories.value, setGoal.value);
-    calories.value = '';
+const add = async () => {
+    try {
+        await addCalories(calories.value, setGoal.value);
+        await fetchFitness(dateBounds.value.start, dateBounds.value.end);
+        toast.success('Calorias adicionadas com sucesso');
+        calories.value = '';
+    } catch (e) {
+        toast.error('Erro ao adicionar calorias');
+    }
 };
 
 const setGoal = computed({

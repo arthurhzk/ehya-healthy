@@ -25,7 +25,7 @@
             title="Adicionar Medicamento"
             description="Adicione um medicamento para a sua rotina diária."
             button-text="Adicionar Medicamento"
-            @click="addMedicines"
+            @click="add"
         >
             <div class="space-y-2">
                 <p>Medicamento:</p>
@@ -86,7 +86,10 @@ import { Input } from '@/primary/components/ui/input';
 import ScheduleCard from '@/primary/components/interfaces/ScheduleCard.vue';
 
 import useMedicines from '@/primary/infrastructure/composables/useMedicines';
+
 import { ref } from 'vue';
+
+import { toast } from 'vue-sonner';
 
 const { medicines, fetchMedicines, addMedicines, state, deleteMedicines } =
     useMedicines();
@@ -96,6 +99,16 @@ const sortMedicinesBySchedule = computed(() => {
         return a.schedule.localeCompare(b.schedule);
     });
 });
+
+const add = async () => {
+    try {
+        await addMedicines();
+        await fetchMedicines();
+        toast.success('Medicamento adicionado com sucesso');
+    } catch (error) {
+        toast.error('Erro ao adicionar medicamento');
+    }
+};
 
 const arrayOfImages = ref([
     '/img/Icon (7).png',

@@ -94,8 +94,9 @@
                     :data="glicemyData"
                     :x="(d: any) => d.x"
                     :y="(d: any) => d.y"
-                    color="#0000FF"
+                    color="#1E90FF"
                 />
+
                 <VisLine
                     :data="bloodPressureData"
                     :x="(d: any) => d.x"
@@ -146,6 +147,8 @@ import { Calendar as CalendarIcon } from 'lucide-vue-next';
 import { Button } from '@/primary/components/ui/button';
 import { Calendar } from '@/primary/components/ui/calendar';
 import { VisXYContainer, VisLine, VisBulletLegend, VisAxis } from '@unovis/vue';
+import { toast } from 'vue-sonner';
+
 import {
     Popover,
     PopoverContent,
@@ -204,8 +207,20 @@ const getLastBloodPressure = getLastValue('blood_pressure');
 const getLastHeartRate = getLastValue('heart_rate');
 
 const addData = async () => {
-    await comp.addData();
-    await comp.fetchMonitoring(dateBounds.value.start, dateBounds.value.end);
+    try {
+        await comp.addData();
+        await comp.fetchMonitoring(
+            dateBounds.value.start,
+            dateBounds.value.end
+        );
+        toast.success('Monitoramento adicionado com sucesso!', {
+            description: new Date().toLocaleString()
+        });
+    } catch (e) {
+        toast.error('Ocorreu um erro.', {
+            description: new Date().toLocaleString()
+        });
+    }
 };
 
 const getFeedback = (value: number, high: number, normal: number) => {
@@ -248,47 +263,26 @@ const cards = computed(() => [
     }
 ]);
 
-const glicemyReducer = computed(() => {
-    if (!comp.monthMonitoring.value) {
-        return {};
-    }
-    return comp.monthMonitoring.value.reduce((acc: any, sum: any) => {
-        const month = getMonth(new Date(sum.created_at));
-        if (!acc[month]) {
-            acc[month] = 0;
+const monitoringReducer = (property: string) => {
+    const computedProperty = computed(() => {
+        if (!comp.monthMonitoring.value) {
+            return {};
         }
-        acc[month] += parseInt(sum.glicemy);
-        return acc;
-    }, {});
-});
+        return comp.monthMonitoring.value.reduce((acc: any, sum: any) => {
+            const month = getMonth(new Date(sum.created_at));
+            if (!acc[month]) {
+                acc[month] = 0;
+            }
+            acc[month] += parseInt(sum[property]);
+            return acc;
+        }, {});
+    });
+    return computedProperty;
+};
 
-const bloodPressureReducer = computed(() => {
-    if (!comp.monthMonitoring.value) {
-        return {};
-    }
-    return comp.monthMonitoring.value.reduce((acc: any, sum: any) => {
-        const month = getMonth(new Date(sum.created_at));
-        if (!acc[month]) {
-            acc[month] = 0;
-        }
-        acc[month] += parseInt(sum.blood_pressure);
-        return acc;
-    }, {});
-});
-
-const heartRateReducer = computed(() => {
-    if (!comp.monthMonitoring.value) {
-        return {};
-    }
-    return comp.monthMonitoring.value.reduce((acc: any, sum: any) => {
-        const month = getMonth(new Date(sum.created_at));
-        if (!acc[month]) {
-            acc[month] = 0;
-        }
-        acc[month] += parseInt(sum.heart_rate);
-        return acc;
-    }, {});
-});
+const glicemyReducer = monitoringReducer('glicemy');
+const bloodPressureReducer = monitoringReducer('blood_pressure');
+const heartRateReducer = monitoringReducer('heart_rate');
 
 const fallbackValue = computed(() => legendItems[curr.value]);
 
@@ -318,29 +312,6 @@ const heartRateData = computed(() =>
 </script>
 
 <style scoped>
-.big-chart {
-    width: 700px;
-    height: 400px;
-    margin: auto;
-    margin-top: 50px;
-    display: block;
-}
-
-.small-chart {
-    width: 100%;
-    height: 400px;
-    margin: auto;
-}
-
-@media (max-width: 768px) {
-    .big-chart {
-        display: none;
-    }
-    .small-chart {
-        display: block;
-    }
-}
-
 .fallbackValueSwitch {
     width: 415px;
     background-color: #f8f8f8;

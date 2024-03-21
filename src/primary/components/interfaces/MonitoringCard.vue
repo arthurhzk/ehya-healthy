@@ -21,10 +21,7 @@
                 align="center"
                 no-gutters
             >
-                <Loader
-                    class="animate-spin"
-                    v-if="!props.value"
-                />
+                <p v-if="!props.value">...</p>
 
                 <v-col
                     class="text-h4"
@@ -68,6 +65,4 @@ const props = defineProps({
         default: 'mdi-arrow-up'
     }
 });
-
-import { Loader } from 'lucide-vue-next';
 </script>

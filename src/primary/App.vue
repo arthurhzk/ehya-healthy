@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import Toaster from '@/primary/components/ui/toast/Toaster.vue';
+import { Toaster } from '@/primary/components/ui/sonner';
 </script>
 
 <style>
