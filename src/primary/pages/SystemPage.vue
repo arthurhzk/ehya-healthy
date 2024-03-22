@@ -80,7 +80,7 @@
             />
         </v-col>
     </v-row>
-    <div class="flex items-center justify-center">
+    <div class="hidden md:block items-center justify-center">
         <div class="fallbackValueSwitch chart-size">
             <p class="text-center">Comparatório</p>
             <VisBulletLegend :items="items" />
@@ -124,6 +124,13 @@
             </VisXYContainer>
         </div>
     </div>
+
+    <div class="mx-auto w-1/2 mt-20">
+        <DataTable
+            :columns="monitoringColumn"
+            :data="mapTableArray"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -132,6 +139,7 @@ import MonitoringCard from '@/primary/components/interfaces/MonitoringCard.vue';
 import SideContainer from '@/primary/components/container/SideContainer.vue';
 import AddMonitoring from '@/primary/components/interfaces/AddMonitoring.vue';
 import useMonitoring from '@/primary/infrastructure/composables/useMonitoring';
+import DataTable from '@/primary/components/interfaces/payments/DataTable.vue';
 import { legendItems } from '@/domain/data/system-chart';
 import { cn } from '@/secondary/lib/utils';
 import {
@@ -148,6 +156,7 @@ import { Button } from '@/primary/components/ui/button';
 import { Calendar } from '@/primary/components/ui/calendar';
 import { VisXYContainer, VisLine, VisBulletLegend, VisAxis } from '@unovis/vue';
 import { toast } from 'vue-sonner';
+import { z } from 'zod';
 
 import {
     Popover,
@@ -156,7 +165,7 @@ import {
 } from '@/primary/components/ui/popover';
 import { Input } from '@/primary/components/ui/input';
 import { ref, computed, onMounted, watch } from 'vue';
-
+import { monitoringColumn } from '@/primary/components/interfaces/payments/columns';
 const comp = useMonitoring();
 const date = ref<Date>(new Date());
 const curr = ref(0);
@@ -172,6 +181,12 @@ const monthBounds = computed(() => {
         start: startOfMonth(date.value),
         end: endOfMonth(date.value)
     };
+});
+
+const schema = z.object({
+    glicemy: z.number().min(30).max(600),
+    bloodPressure: z.number().min(40).max(200),
+    heartRate: z.number().min(30).max(220)
 });
 
 watch(
@@ -207,19 +222,44 @@ const getLastBloodPressure = getLastValue('blood_pressure');
 const getLastHeartRate = getLastValue('heart_rate');
 
 const addData = async () => {
-    try {
-        await comp.addData();
-        await comp.fetchMonitoring(
-            dateBounds.value.start,
-            dateBounds.value.end
-        );
-        toast.success('Monitoramento adicionado com sucesso!', {
-            description: new Date().toLocaleString()
+    const validSchema = schema.safeParse({
+        glicemy: comp.state.glicemy,
+        bloodPressure: comp.state.bloodPressure,
+        heartRate: comp.state.heartRate
+    });
+
+    if (!validSchema.success) {
+        toast.error('Valores inválidos!', {
+            style: {
+                background: '#FF6347',
+                color: '#fff'
+            }
         });
-    } catch (e) {
-        toast.error('Ocorreu um erro.', {
-            description: new Date().toLocaleString()
-        });
+    } else {
+        try {
+            await comp.addData();
+            await comp.fetchMonitoring(
+                dateBounds.value.start,
+                dateBounds.value.end
+            );
+            await comp.fetchMonthMonitoring(
+                monthBounds.value.start,
+                monthBounds.value.end
+            );
+            toast.success('Monitoramento adicionado com sucesso!', {
+                style: {
+                    background: '#008000',
+                    color: '#fff'
+                }
+            });
+        } catch (e) {
+            toast.error('Ocorreu um erro!', {
+                style: {
+                    background: '#FF6347',
+                    color: '#fff'
+                }
+            });
+        }
     }
 };
 
@@ -309,6 +349,22 @@ const heartRateData = computed(() =>
         return { x: i + 1, y: heartRateReducer.value[i] || 0 };
     })
 );
+
+const mapTableArray = computed(() => {
+    if (!comp.monitoring.value) {
+        return [];
+    }
+    return comp.monthMonitoring.value.map((item: any) => {
+        return {
+            glicemy: item.glicemy,
+            bloodPressure: item.blood_pressure,
+            heartRate: item.heart_rate,
+            created_at: format(new Date(item.created_at), 'PPP', {
+                locale: ptBR
+            })
+        };
+    });
+});
 </script>
 
 <style scoped>

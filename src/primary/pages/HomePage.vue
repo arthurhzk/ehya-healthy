@@ -1,4 +1,5 @@
 <template>
+    <TheNav />
     <section>
         <SideContainer>
             <div class="w-full flex">
@@ -154,6 +155,8 @@
             </div>
         </SideContainer>
     </section>
+
+    <TheFooter />
 </template>
 
 <script setup lang="ts">
@@ -162,4 +165,6 @@ import SideContainer from '@/primary/components/container/SideContainer.vue';
 import GoodiesCard from '@/primary/components/interfaces/GoodiesCard.vue';
 import DoctorsCard from '@/primary/components/interfaces/DoctorsCard.vue';
 import { Button } from '@/primary/components/ui/button';
+import TheNav from '@/primary/components/interfaces/TheNav.vue';
+import TheFooter from '@/primary/components/interfaces/TheFooter.vue';
 </script>

@@ -1,7 +1,7 @@
 import supabase from '@/secondary/lib/supabase';
 import { reactive, ref } from 'vue';
 
-interface Monitoring {
+ interface Monitoring {
     glicemy: number | string;
     bloodPressure: number | string;
     heartRate: number | string;

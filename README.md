@@ -1,45 +1,35 @@
-# Voyager Backpacks
+# Monitoramento de Saúde Vue.js com Supabase, Shadcn UI, Unovis e Vuetify
 
- Este é um e-commerce que desenvolvi para aplicar novos conhecimentos e aprimorar a qualidade dos meus projetos.
+## Descrição do Projeto
+
+Este projeto consiste em uma aplicação web para monitoramento de saúde desenvolvida utilizando Vue.js. Ele permite o acompanhamento de diversas métricas de saúde, como glicemia, batimentos cardíacos e pressão arterial. Além disso, oferece funcionalidades para armazenar informações sobre medicamentos, incluindo horários de administração, e controlar as calorias gastas diariamente. Através de gráficos interativos, os usuários podem analisar comparativos diários.
 
 ## Tecnologias Utilizadas
 
-- **Arquitetura Hexagonal**: A aplicação segue os princípios da arquitetura hexagonal para melhor organização e legibilidade do código.
-- **Stripe API**: Implementação da API Stripe para o redirecionamento do produto para uma página de pagamento real.
-- **Intersection Observer**: Utilização da API Intersection Observer para criar efeitos visuais interessantes.
-- **Zod**: Dependência para a validação eficiente de formulários.
-- **Mobile First**: Adoção da técnica Mobile First para facilitar a implementação de responsividade.
-- **Shadcn**: Utilização da biblioteca de componentes Shadcn para criar interfaces modernas.
-- **Supabase, Vue.js, Pinia, Typescript**: Tecnologias escolhidas para o desenvolvimento, aproveitando familiaridade e eficiência.
+-   Vue.js: Um framework JavaScript progressivo para construção de interfaces de usuário.
+-   Supabase: Uma alternativa de código aberto ao Firebase, fornecendo um backend completo com banco de dados, autenticação, armazenamento e funções de servidor.
+-   Shadcn UI: Uma biblioteca de componentes de UI baseada em Tailwind.
+-   Unovis: Uma biblioteca para criação de gráficos interativos no Vue.js.
 
-## Pré-requisitos
+## Rodando os dados
 
-Certifique-se de ter as seguintes tecnologias instaladas:
+Para usar o Supabase como seu backend, você precisará configurar a chave de API no arquivo .env. Copie o arquivo .env para .env e substitua pelas sua chaves de API do Supabase.
 
-- Node.js
-- npm
-
+VITE_SUPABASE_URL= SUA_API_KEY
+VITE_SUPABASE_ANON_KEY=SUA_ANON_KEY
 
 ## Instalação
 
-1. Clone o repositório: `git clone https://github.com/arthurhzk/voyager-backpacks-eccommerce.git`
-2. Navegue até o diretório do projeto: `cd voyager-backpacks-eccommerce`
-3. Instale as dependências: `npm install`
+Para instalar as dependências do projeto, execute o seguinte comando:
 
+npm install
 
-## Uso
+## Execução
 
-1. Inicie o servidor local: `npm run dev`
-2. Acesse a aplicação no navegador: `http://localhost:5173`
+Para rodar o projeto em seguida, execute o seguinte comando:
 
-## Contribuição
+npm run dev
 
-Sinta-se à vontade para contribuir com melhorias, correções de bugs ou novas funcionalidades. Abra uma issue para discussões ou envie um pull request.
+## Contribuindo
 
-## Licença
-
-Este projeto está sobre minha licença, se tiver interesse em contribuir, é só entrar em contato comigo!
-
----
-
-
+Sinta-se à vontade para contribuir para o desenvolvimento deste projeto! Se você tem sugestões, melhorias ou encontrou algum problema, por favor, abra uma issue ou envie um pull request. Todas as contribuições são bem-vindas!
